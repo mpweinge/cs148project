@@ -1,0 +1,9 @@
+
+*.xcuserstate
+*.xcscheme
+*.xcworkspacedata
+cs148project/build/*
+*.hmap
+cs148project/cs148project.xcodeproj/xcuserdata/*
+
+cs148project/build/cs148project.build/Debug/cs148project.build/Objects-normal/x86_64/cs148project.LinkFileList
