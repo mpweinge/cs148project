@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		A61F0E051B6D6691001989CB /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A61F0E041B6D6691001989CB /* main.cpp */; };
+		A61F0E0E1B6D6885001989CB /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A61F0E0C1B6D6885001989CB /* GLUT.framework */; };
+		A61F0E101B6D6891001989CB /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A61F0E0F1B6D6891001989CB /* OpenGL.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +27,9 @@
 /* Begin PBXFileReference section */
 		A61F0E011B6D6691001989CB /* cs148project */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = cs148project; sourceTree = BUILT_PRODUCTS_DIR; };
 		A61F0E041B6D6691001989CB /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		A61F0E0C1B6D6885001989CB /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
+		A61F0E0F1B6D6891001989CB /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		A61F0E121B6D6AEF001989CB /* SimpleShaderProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleShaderProgram.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +37,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A61F0E101B6D6891001989CB /* OpenGL.framework in Frameworks */,
+				A61F0E0E1B6D6885001989CB /* GLUT.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -41,6 +48,8 @@
 		A61F0DF81B6D6691001989CB = {
 			isa = PBXGroup;
 			children = (
+				A61F0E0F1B6D6891001989CB /* OpenGL.framework */,
+				A61F0E0C1B6D6885001989CB /* GLUT.framework */,
 				A61F0E031B6D6691001989CB /* cs148project */,
 				A61F0E021B6D6691001989CB /* Products */,
 			);
@@ -57,6 +66,7 @@
 		A61F0E031B6D6691001989CB /* cs148project */ = {
 			isa = PBXGroup;
 			children = (
+				A61F0E121B6D6AEF001989CB /* SimpleShaderProgram.h */,
 				A61F0E041B6D6691001989CB /* main.cpp */,
 			);
 			path = cs148project;
