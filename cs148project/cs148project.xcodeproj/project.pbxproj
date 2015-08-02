@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		A61F0E051B6D6691001989CB /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A61F0E041B6D6691001989CB /* main.cpp */; };
-		A61F0E0E1B6D6885001989CB /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A61F0E0C1B6D6885001989CB /* GLUT.framework */; };
 		A61F0E101B6D6891001989CB /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A61F0E0F1B6D6891001989CB /* OpenGL.framework */; };
+		A61F0E231B6E8E40001989CB /* libglfw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A61F0E221B6E8E40001989CB /* libglfw3.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -27,10 +27,16 @@
 /* Begin PBXFileReference section */
 		A61F0E011B6D6691001989CB /* cs148project */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = cs148project; sourceTree = BUILT_PRODUCTS_DIR; };
 		A61F0E041B6D6691001989CB /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		A61F0E0C1B6D6885001989CB /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
 		A61F0E0F1B6D6891001989CB /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		A61F0E121B6D6AEF001989CB /* SimpleShaderProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleShaderProgram.h; sourceTree = "<group>"; };
 		A61F0E131B6D77FE001989CB /* cube.obj */ = {isa = PBXFileReference; lastKnownFileType = text; path = cube.obj; sourceTree = "<group>"; };
+		A61F0E161B6DF6C0001989CB /* vertex.shader */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = vertex.shader; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.glsl; };
+		A61F0E171B6DF6CA001989CB /* fragment.shader */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fragment.shader; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.glsl; };
+		A61F0E181B6DF6D4001989CB /* tess_control.shader */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tess_control.shader; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.glsl; };
+		A61F0E191B6DF6E6001989CB /* tess_eval.shader */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = tess_eval.shader; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.glsl; };
+		A61F0E1A1B6DF6EF001989CB /* geometry.shader */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = geometry.shader; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.glsl; };
+		A61F0E221B6E8E40001989CB /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libglfw3.a; path = "../../Downloads/opengl-series-master/platforms/osx/libglfw3.a"; sourceTree = "<group>"; };
+		A61F0E241B6EAA03001989CB /* glm */ = {isa = PBXFileReference; lastKnownFileType = folder; path = glm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,8 +44,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A61F0E231B6E8E40001989CB /* libglfw3.a in Frameworks */,
 				A61F0E101B6D6891001989CB /* OpenGL.framework in Frameworks */,
-				A61F0E0E1B6D6885001989CB /* GLUT.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -49,8 +55,8 @@
 		A61F0DF81B6D6691001989CB = {
 			isa = PBXGroup;
 			children = (
+				A61F0E221B6E8E40001989CB /* libglfw3.a */,
 				A61F0E0F1B6D6891001989CB /* OpenGL.framework */,
-				A61F0E0C1B6D6885001989CB /* GLUT.framework */,
 				A61F0E031B6D6691001989CB /* cs148project */,
 				A61F0E021B6D6691001989CB /* Products */,
 			);
@@ -67,9 +73,15 @@
 		A61F0E031B6D6691001989CB /* cs148project */ = {
 			isa = PBXGroup;
 			children = (
+				A61F0E241B6EAA03001989CB /* glm */,
 				A61F0E131B6D77FE001989CB /* cube.obj */,
 				A61F0E121B6D6AEF001989CB /* SimpleShaderProgram.h */,
 				A61F0E041B6D6691001989CB /* main.cpp */,
+				A61F0E161B6DF6C0001989CB /* vertex.shader */,
+				A61F0E171B6DF6CA001989CB /* fragment.shader */,
+				A61F0E181B6DF6D4001989CB /* tess_control.shader */,
+				A61F0E191B6DF6E6001989CB /* tess_eval.shader */,
+				A61F0E1A1B6DF6EF001989CB /* geometry.shader */,
 			);
 			path = cs148project;
 			sourceTree = "<group>";
@@ -217,6 +229,18 @@
 		A61F0E091B6D6691001989CB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/opt/X11/include,
+					/usr/local/include,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					/usr/local/lib,
+					/opt/X11/lib,
+					"/Users/Mikey/Downloads/opengl-series-master/platforms/osx",
+				);
+				OTHER_LDFLAGS = "-lglfw3";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -224,6 +248,18 @@
 		A61F0E0A1B6D6691001989CB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/opt/X11/include,
+					/usr/local/include,
+				);
+				LIBRARY_SEARCH_PATHS = (
+					/usr/local/lib,
+					/opt/X11/lib,
+					"/Users/Mikey/Downloads/opengl-series-master/platforms/osx",
+				);
+				OTHER_LDFLAGS = "-lglfw3";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -247,6 +283,7 @@
 				A61F0E0A1B6D6691001989CB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

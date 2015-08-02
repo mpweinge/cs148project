@@ -7,8 +7,10 @@
 * GLEW must be included before the standard GL.h header.
 */
 
-#include <OpenGL/gl.h>
-#include <OpenGL/glu.h>
+//#include <OpenGL/gl.h>
+#include <GL/gl.h>
+//#include <OpenGL/glu.h>
+#include <GL/glu.h>
 #include <string>
 #include <vector>
 #include <assert.h>
@@ -49,113 +51,54 @@ public:
 	//    You need to add at least one vertex shader and one fragment shader. You can add multiple shaders
 	//    of each type as long as only one of them has a main() function.
 	//
+    
+    void ShaderCreationRoutine(const std::string& filename, GLenum type)
+    {
+        std::ifstream in(filename.c_str());
+        if(!in) {
+            fprintf(stderr, "Failed to open shader file '%s'\n", filename.c_str());
+            assert(false);
+            return;
+        }
+        std::stringstream ss;
+        ss << in.rdbuf();
+        
+        std::string str = ss.str();
+        const char* ptr = str.c_str();
+        
+        // Buffer for error messages
+        static const int kBufferSize = 1024;
+        char buffer[1024];
+        
+        GLuint shader = glCreateShader(type);
+        glShaderSource(shader, 1, &ptr, NULL);
+        glCompileShader(shader);
+        GLint result = 0;
+        glGetShaderiv(shader, GL_COMPILE_STATUS, &result);
+        if(result != GL_TRUE) {
+            GLsizei length = 0;
+            glGetShaderInfoLog(shader, kBufferSize-1,
+                               &length, buffer);
+            fprintf(stderr, "%s: GLSL error\n%s\n", filename.c_str(), buffer);
+            assert(false);
+        }
+        glAttachShader(programid, shader);
+        glLinkProgram(programid);
+    }
+    
 	void LoadVertexShader(const std::string& filename) {
-		std::ifstream in(filename.c_str());
-		if(!in) {
-			fprintf(stderr, "Failed to open shader file '%s'\n", filename.c_str());
-			assert(false);
-			return;
-		}
-		std::stringstream ss;
-		ss << in.rdbuf();
-
-		std::string str = ss.str();
-		const char* ptr = str.c_str();
-
-		// Buffer for error messages
-		static const int kBufferSize = 1024;
-		char buffer[1024];
-
-		if(GLEW_VERSION_2_0) 
-		{
-			GLuint shader = glCreateShader(GL_VERTEX_SHADER);
-			glShaderSource(shader, 1, &ptr, NULL);
-			glCompileShader(shader);
-			GLint result = 0;
-			glGetShaderiv(shader, GL_COMPILE_STATUS, &result);
-			if(result != GL_TRUE) {
-				GLsizei length = 0;
-				glGetShaderInfoLog(shader, kBufferSize-1,
-					&length, buffer);
-				fprintf(stderr, "%s: GLSL error\n%s\n", filename.c_str(), buffer);
-				assert(false);
-			}
-			glAttachShader(programid, shader);
-			glLinkProgram(programid);
-		}
-#ifndef __APPLE__
-		else
-		{
-			GLuint shader = glCreateShaderObjectARB(GL_VERTEX_SHADER);
-			glShaderSourceARB(shader, 1, &ptr, NULL);
-			glCompileShaderARB(shader);
-			GLint result = 0;
-			glGetObjectParameterivARB(shader, GL_OBJECT_COMPILE_STATUS_ARB, &result);
-			if(result != GL_TRUE) {
-				GLsizei length = 0;
-				glGetInfoLogARB(shader, kBufferSize-1,
-					&length, buffer);
-				fprintf(stderr, "%s: GLSL error\n%s\n", filename.c_str(), buffer);
-				assert(false);
-			}
-			glAttachObjectARB(programid, shader);
-			glLinkProgramARB(programid);
-		}
-#endif
+		ShaderCreationRoutine(filename, GL_VERTEX_SHADER);
 	}
+    
+    /*void LoadTesselationShaders(const std::string tessControlShader, const std::string tessEvalShader, const std::string geometryShader)
+    {
+        ShaderCreationRoutine(tessControlShader, GL_TESS_CONTROL_SHADER);
+        ShaderCreationRoutine(tessEvalShader, GL_TESS_EVALUATION_SHADER);
+        ShaderCreationRoutine(geometryShader, GL_GEOMETRY_SHADER);
+    }*/
+    
 	void LoadFragmentShader(const std::string& filename) {
-		std::ifstream in(filename.c_str());
-		if(!in) {
-			fprintf(stderr, "Failed to open shader file '%s'\n", filename.c_str());
-			assert(false);
-			return;
-		}
-		std::stringstream ss;
-		ss << in.rdbuf();
-
-		std::string str = ss.str();
-		const char* ptr = str.c_str();
-
-		// Buffer for error messages
-		static const int kBufferSize = 1024;
-		char buffer[1024];
-
-		if(GLEW_VERSION_2_0)
-		{
-			GLuint shader = glCreateShader(GL_FRAGMENT_SHADER);
-			glShaderSource(shader, 1, &ptr, NULL);
-			glCompileShader(shader);
-			GLint result = 0;
-			glGetShaderiv(shader, GL_COMPILE_STATUS, &result);
-			if(result != GL_TRUE) {
-				GLsizei length = 0;
-				glGetShaderInfoLog(shader, kBufferSize-1,
-					&length, buffer);
-				fprintf(stderr, "%s: GLSL error\n%s\n", filename.c_str(), buffer);
-				assert(false);
-			}
-			glAttachShader(programid, shader);
-			glLinkProgram(programid);
-		}
-#ifndef __APPLE__
-		else
-		{
-			GLuint shader = glCreateShaderObjectARB(GL_FRAGMENT_SHADER);
-			glShaderSourceARB(shader, 1, &ptr, NULL);
-			glCompileShaderARB(shader);
-			GLint result = 0;
-			glGetObjectParameterivARB(shader, GL_OBJECT_COMPILE_STATUS_ARB, &result);
-			if(result != GL_TRUE) {
-				GLsizei length = 0;
-				glGetInfoLogARB(shader, kBufferSize-1,
-					&length, buffer);
-				fprintf(stderr, "%s: GLSL error\n%s\n", filename.c_str(), buffer);
-				assert(false);
-			}
-			glAttachObjectARB(programid, shader);
-			glLinkProgramARB(programid);
-		}
-#endif
+        ShaderCreationRoutine(filename, GL_FRAGMENT_SHADER);
 	}
 
 	void Bind() {
@@ -233,6 +176,13 @@ public:
 			glUniform4fARB(location, v0, v1, v2, v3);
 		}
 	}
+    
+    void SetUniformMatrix4fv(const std::string&name, float * vector)
+    {
+        GLint location = GetUniformLocation(name);
+        if (location == -1) return;
+        glUniformMatrix4fv(location, 1, 0, vector);
+    }
 
 private:
 	//
