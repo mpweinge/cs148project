@@ -90,12 +90,12 @@ public:
 		ShaderCreationRoutine(filename, GL_VERTEX_SHADER);
 	}
     
-    /*void LoadTesselationShaders(const std::string tessControlShader, const std::string tessEvalShader, const std::string geometryShader)
+    void LoadTesselationShaders(const std::string tessControlShader, const std::string tessEvalShader, const std::string geometryShader)
     {
         ShaderCreationRoutine(tessControlShader, GL_TESS_CONTROL_SHADER);
         ShaderCreationRoutine(tessEvalShader, GL_TESS_EVALUATION_SHADER);
         ShaderCreationRoutine(geometryShader, GL_GEOMETRY_SHADER);
-    }*/
+    }
     
 	void LoadFragmentShader(const std::string& filename) {
         ShaderCreationRoutine(filename, GL_FRAGMENT_SHADER);

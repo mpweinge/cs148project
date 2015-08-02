@@ -8,18 +8,6 @@
 
 #define GLEW_VERSION_2_0 1
 
-#ifdef DARWIN
-#ifndef GL_TESS_CONTROL_SHADER
-#define GL_TESS_CONTROL_SHADER 0x00008e88
-#endif
-#ifndef GL_TESS_EVALUATION_SHADER
-#define GL_TESS_EVALUATION_SHADER 0x00008e87
-#endif
-#ifndef GL_PATCHES
-#define GL_PATCHES 0x0000000e
-#endif
-#endif
-
 #define BUFFER_OFFSET(i) ((char *)NULL + (i))
 
 #include <iostream>
@@ -461,13 +449,14 @@ static void Render() {
     shader->SetUniformMatrix4fv("Modelview", Modelview);
     
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    glPatchParameteri(GL_PATCH_VERTICES, 3);
     
     // bind the VAO (the triangle)
     glBindVertexArray(gVAO);
     
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indices);
     // draw the VAO
-    glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_SHORT, BUFFER_OFFSET(0));
+    glDrawElements(GL_PATCHES, 3, GL_UNSIGNED_SHORT, BUFFER_OFFSET(0));
     
     // unbind the VAO
     glBindVertexArray(0);
@@ -511,7 +500,7 @@ void Setup()
     shader = new SimpleShaderProgram();
     shader->LoadVertexShader(vertexShaderPath);
     shader->LoadFragmentShader(fragmentShaderPath);
-    //shader->LoadTesselationShaders(tessControlShaderPath, tessEvalShaderPath, geometryShaderPath);
+    shader->LoadTesselationShaders(tessControlShaderPath, tessEvalShaderPath, geometryShaderPath);
     
     //CreateIcosahedron();
     //glDrawArrays(GL_PATCHES, 0, 8);
