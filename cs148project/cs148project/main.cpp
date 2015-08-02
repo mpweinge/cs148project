@@ -416,15 +416,13 @@ static void LoadTriangle() {
     glBindBuffer(GL_ARRAY_BUFFER, gVBO);
     
     // Put the three triangle verticies into the VBO
-    /*GLfloat vertexData[] = {
-        //  X     Y     Z
+    GLfloat vertexData[] = {
         0.0f, 0.8f, 0.0f,
         -0.8f,-0.8f, 0.0f,
         0.8f,-0.8f, 0.0f,
-        1.0f, 1.0f, 0.0f,
-        0.0f, 1.0f, 0.0f,
-    };*/
-    glBufferData(GL_ARRAY_BUFFER, sizeof(Verts), Verts, GL_STATIC_DRAW);
+    };
+//    glBufferData(GL_ARRAY_BUFFER, sizeof(Verts), Verts, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
     
     // connect the xyz to the "vert" attribute of the vertex shader
     glEnableVertexAttribArray(PositionSlot);
@@ -434,20 +432,17 @@ static void LoadTriangle() {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
     
-    /*ushort pindices[6];
+    ushort pindices[6];
     pindices[0] = 0;
     pindices[1] = 1;
     pindices[2] = 2;
     
-    pindices[3] = 2;
-    pindices[4] = 0;
-    pindices[5] = 3;*/
-    
-    IndexCount = sizeof(Faces) / sizeof(Faces[0]);
+    //IndexCount = sizeof(Faces) / sizeof(Faces[0]);
     
     glGenBuffers(1, &indices);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indices);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * IndexCount, Faces, GL_STATIC_DRAW);
+    //glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * IndexCount, Faces, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(ushort) * 3, pindices, GL_STATIC_DRAW);
 }
 
 
@@ -472,7 +467,7 @@ static void Render() {
     
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indices);
     // draw the VAO
-    glDrawElements(GL_TRIANGLES, IndexCount, GL_UNSIGNED_SHORT, BUFFER_OFFSET(0));
+    glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_SHORT, BUFFER_OFFSET(0));
     
     // unbind the VAO
     glBindVertexArray(0);
