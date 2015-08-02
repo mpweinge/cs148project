@@ -455,8 +455,8 @@ static void Render() {
     // bind the program (the shaders)
     shader->Bind();
     
-    perspective(-1, 1, -1, 1, 1, 20);
-    compat_gluLookAt(0, 0, 5, 0, 0, -2, 0, 1, 0);
+    perspective(-1, 1, -1, 1, 1, 5);
+    compat_gluLookAt(0, 0, 1, 0, 0, -2, 0, 1, 0);
     shader->SetUniformMatrix4fv("Projection", Projective);
     shader->SetUniformMatrix4fv("Modelview", Modelview);
     
