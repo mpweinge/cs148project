@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		A61F0E101B6D6891001989CB /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A61F0E0F1B6D6891001989CB /* OpenGL.framework */; };
 		A61F0E261B6EB43E001989CB /* libglfw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A61F0E251B6EB43E001989CB /* libglfw3.a */; };
-		CF404C551B6EC6820019FF06 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CF404C541B6EC6820019FF06 /* main.cpp */; };
+		CF404C551B6EC6820019FF06 /* main_joe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CF404C541B6EC6820019FF06 /* main_joe.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -37,7 +37,7 @@
 		A61F0E1A1B6DF6EF001989CB /* geometry.shader */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = geometry.shader; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.glsl; };
 		A61F0E241B6EAA03001989CB /* glm */ = {isa = PBXFileReference; lastKnownFileType = folder; path = glm; sourceTree = "<group>"; };
 		A61F0E251B6EB43E001989CB /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libglfw3.a; path = cs148project/libglfw3.a; sourceTree = "<group>"; };
-		CF404C541B6EC6820019FF06 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		CF404C541B6EC6820019FF06 /* main_joe.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main_joe.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,7 +83,7 @@
 				A61F0E181B6DF6D4001989CB /* tess_control.shader */,
 				A61F0E191B6DF6E6001989CB /* tess_eval.shader */,
 				A61F0E1A1B6DF6EF001989CB /* geometry.shader */,
-				CF404C541B6EC6820019FF06 /* main.cpp */,
+				CF404C541B6EC6820019FF06 /* main_joe.cpp */,
 			);
 			path = cs148project;
 			sourceTree = "<group>";
@@ -144,7 +144,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CF404C551B6EC6820019FF06 /* main.cpp in Sources */,
+				CF404C551B6EC6820019FF06 /* main_joe.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
