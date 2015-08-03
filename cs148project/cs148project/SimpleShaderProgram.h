@@ -17,6 +17,7 @@
 #include <string>
 #include <fstream>
 #include <sstream>
+#include "constants.h"
 
 /**
 * SimpleShaderProgram - class to use GLSL programs.
