@@ -51,7 +51,7 @@ static float dx = 0.0;
 static const float xmax = 1.0;
 static const float xstep = 0.02;
 
-// Rotate 
+// Rotate
 static glm::vec2 orientation(0.0, 0.0); // yaw, pitch (deg)
 static const float pixelToDeg = 0.1;
 static glm::vec2 mouseLimits(10.0 / pixelToDeg, 7.0 / pixelToDeg); // x, y
@@ -181,7 +181,7 @@ void glSetup() {
   shader = new SimpleShaderProgram();
   shader->LoadVertexShader(vertexShaderPath);
   shader->LoadFragmentShader(fragmentShaderPath);
-  shader->LoadTesselationShaders(tessControlShaderPath, tessEvalShaderPath, geometryShaderPath);
+//  shader->LoadTesselationShaders(tessControlShaderPath, tessEvalShaderPath, geometryShaderPath);
   
   // Initial view
   setProjection(1.0);
