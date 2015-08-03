@@ -506,6 +506,30 @@ void Setup()
     //glDrawArrays(GL_PATCHES, 0, 8);
 }
 
+void screenToWorld(GLdouble x, GLdouble y, GLdouble & nearPointX, GLdouble & nearPointY, GLdouble & nearPointZ)
+{
+    GLint viewportMatrix[4];
+    
+    glGetIntegerv(GL_VIEWPORT, viewportMatrix);
+    
+    y = (float)viewportMatrix[3] - y;
+    
+    GLdouble winZ;
+    
+    glReadPixels(x, y, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ);
+    
+    GLdouble modelViewMatrix[16];
+    GLdouble projectionMatrix[16];
+    
+    for (int i = 0; i < 16; i++)
+    {
+        modelViewMatrix[i] = Modelview[i];
+        projectionMatrix[i] = Projective[i];
+    }
+    
+    gluUnProject(x,y,winZ,modelViewMatrix, projectionMatrix, viewportMatrix, &nearPointX,  &nearPointY, &nearPointZ);
+}
+
 /*void mouseFunction(GLFWwindow * window, int button, int action, int mods)
 {
     currX = x;
@@ -537,6 +561,20 @@ void onMouseButton( GLFWwindow* window, int button, int action, int mods ) {
         if (action == GLFW_PRESS )
         {
             leftButton = true;
+        
+            //touchLocation
+            double xpos, ypos;
+            glfwGetCursorPos(window, &xpos, &ypos);
+            shader->Bind();
+            
+            GLdouble nearPointX, nearPointY, nearPointZ;
+            //screenToWorld(xpos, ypos, nearPointX, nearPointY, nearPointZ);
+            nearPointX = ((xpos / 600.0) - 0.5) * 2;
+            nearPointY = ((400 - ypos) / 400.0);
+            nearPointZ = 0.0;
+            
+            cout << "X: " << nearPointX << "Y: " << nearPointY << "Z: " << nearPointZ << endl;
+            shader->SetUniform("touchLocation", nearPointX, nearPointY, nearPointZ);
         } else if (action == GLFW_RELEASE) {
             leftButton = false;
         }
