@@ -180,7 +180,10 @@ public:
     void SetUniformMatrix4fv(const std::string&name, float * vector)
     {
         GLint location = GetUniformLocation(name);
-        if (location == -1) return;
+      if (location == -1) {
+        std::cout << "Failed to set uniform: " + name + ".\n";
+        return;
+      }
         glUniformMatrix4fv(location, 1, 0, vector);
     }
 
