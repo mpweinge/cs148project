@@ -38,8 +38,6 @@
 GLFWwindow* gWindow = NULL;
 
 // Displaying
-const std::string vertexShaderPath = "../../cs148project/vertex.shader";
-const std::string fragmentShaderPath = "../../cs148project/fragment.shader";
 SimpleShaderProgram *shader;
 glm::mat4 projection;
 glm::mat4 modelView;
@@ -53,11 +51,12 @@ static float dx = 0.0;
 static const float xmax = 1.0;
 static const float xstep = 0.02;
 
-// Rotate (to look where mouse is)
+// Rotate 
 static glm::vec2 orientation(0.0, 0.0); // yaw, pitch (deg)
 static const float pixelToDeg = 0.1;
 static glm::vec2 mouseLimits(10.0 / pixelToDeg, 7.0 / pixelToDeg); // x, y
 static const float degToRad = M_PI / 180.0;
+static bool orientationActive = false;
 
 // Testing -- delete later
 static float zdist = 25.0;
@@ -69,18 +68,33 @@ float triVerts[] = {-0.5, -0.5, zdist,
 inline double abs(double x){ return x < 0 ? -x : x; };
 
 void cursor_position_callback(GLFWwindow *win, double x, double y){
+  // Check if we should activate motion via mouse
+  if (!orientationActive) return;
   // Distance from center
   glm::vec2 mousePos = glm::vec2(x, y) - winCenter;
   // Clamp
   glm::vec2 mousePosClamp = glm::clamp(mousePos, -mouseLimits, mouseLimits);
   // Make sure cursor doesn't get carried away
   if (mousePos != mousePosClamp) {
-    glfwSetCursorPos(gWindow, mousePosClamp[0] + winCenter[0], mousePosClamp[1] + winCenter[1]);  }
+    glfwSetCursorPos(gWindow, mousePosClamp[0] + winCenter[0], mousePosClamp[1] + winCenter[1]);
+  }
     orientation = pixelToDeg * mousePos;
  }
 
-void onMouseButton(GLFWwindow *win, int x, int y, int button){
+void onMouseButton(GLFWwindow *win, int button, int action, int mods){
+  if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS){
+    shader->Bind();
+    shader->SetUniform("touchLocation", 0.0, 0.0, zdist);
+    shader->UnBind();
+  }
   
+}
+
+void cursor_enter_callback(GLFWwindow* window, int entered){
+  if (entered && !orientationActive){
+    glfwSetInputMode(gWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    orientationActive = true;
+  }
 }
 
 void key_callback(GLFWwindow *win, int key, int scancode, int action, int mods){
@@ -117,8 +131,9 @@ void setProjection(double zoom){
   projection = glm::perspective(fovy, 1.5f, nearPlane, 100.0f);
 }
 
+// Be sure to bind before calling this
 void updateUniformMatrices(){
-  shader->SetUniformMatrix4fv("ModelView", glm::value_ptr(modelView));
+  shader->SetUniformMatrix4fv("Modelview", glm::value_ptr(modelView));
   shader->SetUniformMatrix4fv("Projection", glm::value_ptr(projection));
 }
 
@@ -166,6 +181,7 @@ void glSetup() {
   shader = new SimpleShaderProgram();
   shader->LoadVertexShader(vertexShaderPath);
   shader->LoadFragmentShader(fragmentShaderPath);
+  shader->LoadTesselationShaders(tessControlShaderPath, tessEvalShaderPath, geometryShaderPath);
   
   // Initial view
   setProjection(1.0);
@@ -206,10 +222,11 @@ void glfwSetup(){
 #endif
   
   // Set up callbacks
-  glfwSetInputMode(gWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+  //glfwSetInputMode(gWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
   glfwSetCursorPosCallback(gWindow, cursor_position_callback);
   glfwSetMouseButtonCallback(gWindow, onMouseButton);
   glfwSetKeyCallback(gWindow, key_callback);
+  glfwSetCursorEnterCallback(gWindow, cursor_enter_callback);
   
 }
 
