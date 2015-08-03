@@ -1,6 +1,7 @@
 #version 410
 
 in vec3 Position;
+out vec3 vPosition;
 
 uniform mat4 Projection;
 uniform mat4 ModelView;
