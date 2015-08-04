@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		A61F0E101B6D6891001989CB /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A61F0E0F1B6D6891001989CB /* OpenGL.framework */; };
 		A61F0E261B6EB43E001989CB /* libglfw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A61F0E251B6EB43E001989CB /* libglfw3.a */; };
-		CF404C551B6EC6820019FF06 /* main_joe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CF404C541B6EC6820019FF06 /* main_joe.cpp */; };
+		CF404C591B6FFE980019FF06 /* main_joe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CF404C541B6EC6820019FF06 /* main_joe.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -26,7 +26,7 @@
 
 /* Begin PBXFileReference section */
 		A61F0E011B6D6691001989CB /* cs148project */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = cs148project; sourceTree = BUILT_PRODUCTS_DIR; };
-		A61F0E041B6D6691001989CB /* main_old.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main_old.cpp; sourceTree = "<group>"; };
+		A61F0E041B6D6691001989CB /* main_mike.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main_mike.cpp; sourceTree = "<group>"; };
 		A61F0E0F1B6D6891001989CB /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		A61F0E121B6D6AEF001989CB /* SimpleShaderProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleShaderProgram.h; sourceTree = "<group>"; };
 		A61F0E131B6D77FE001989CB /* cube.obj */ = {isa = PBXFileReference; lastKnownFileType = text; path = cube.obj; sourceTree = "<group>"; };
@@ -38,6 +38,7 @@
 		A61F0E241B6EAA03001989CB /* glm */ = {isa = PBXFileReference; lastKnownFileType = folder; path = glm; sourceTree = "<group>"; };
 		A61F0E251B6EB43E001989CB /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libglfw3.a; path = cs148project/libglfw3.a; sourceTree = "<group>"; };
 		CF404C541B6EC6820019FF06 /* main_joe.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main_joe.cpp; sourceTree = "<group>"; };
+		CF404C5B1B7005BB0019FF06 /* constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = constants.h; path = cs148project/constants.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +57,7 @@
 		A61F0DF81B6D6691001989CB = {
 			isa = PBXGroup;
 			children = (
+				CF404C5B1B7005BB0019FF06 /* constants.h */,
 				A61F0E251B6EB43E001989CB /* libglfw3.a */,
 				A61F0E0F1B6D6891001989CB /* OpenGL.framework */,
 				A61F0E031B6D6691001989CB /* cs148project */,
@@ -77,7 +79,7 @@
 				A61F0E241B6EAA03001989CB /* glm */,
 				A61F0E131B6D77FE001989CB /* cube.obj */,
 				A61F0E121B6D6AEF001989CB /* SimpleShaderProgram.h */,
-				A61F0E041B6D6691001989CB /* main_old.cpp */,
+				A61F0E041B6D6691001989CB /* main_mike.cpp */,
 				A61F0E161B6DF6C0001989CB /* vertex.shader */,
 				A61F0E171B6DF6CA001989CB /* fragment.shader */,
 				A61F0E181B6DF6D4001989CB /* tess_control.shader */,
@@ -144,7 +146,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CF404C551B6EC6820019FF06 /* main_joe.cpp in Sources */,
+				CF404C591B6FFE980019FF06 /* main_joe.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
