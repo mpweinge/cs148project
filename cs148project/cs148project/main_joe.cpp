@@ -168,12 +168,12 @@ void display(){
   // Drawing
   shader->Bind();
   updateUniformMatrices();
-  glDrawArrays(GL_TRIANGLES, 0, 3);
+  glDrawArrays(GL_PATCHES, 0, 3);
   shader->UnBind();
   
 }
 
-/**************** Initializaiton Functions *************/
+/**************** Initialization Functions *************/
 
 void glSetup() {
   
@@ -181,14 +181,15 @@ void glSetup() {
   shader = new SimpleShaderProgram();
   shader->LoadVertexShader(vertexShaderPath);
   shader->LoadFragmentShader(fragmentShaderPath);
-//  shader->LoadTesselationShaders(tessControlShaderPath, tessEvalShaderPath, geometryShaderPath);
+  shader->LoadTesselationShaders(tessControlShaderPath, tessEvalShaderPath, geometryShaderPath);
   
   // Initial view
   setProjection(1.0);
   
   // Rendering params
   glClearColor(0, 0.0, 0.0, 1);
-  glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+  glPatchParameteri(GL_PATCH_VERTICES, 3);
   glEnable(GL_DEPTH_TEST);
   
   // Load triangle into buffer

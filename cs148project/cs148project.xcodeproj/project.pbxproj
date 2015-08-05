@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		A61F0E101B6D6891001989CB /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A61F0E0F1B6D6891001989CB /* OpenGL.framework */; };
 		A61F0E261B6EB43E001989CB /* libglfw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A61F0E251B6EB43E001989CB /* libglfw3.a */; };
-		CF404C591B6FFE980019FF06 /* main_joe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CF404C541B6EC6820019FF06 /* main_joe.cpp */; };
+		A6C1AFB51B71D76500F9EDAD /* main_joe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CF404C541B6EC6820019FF06 /* main_joe.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -146,7 +146,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CF404C591B6FFE980019FF06 /* main_joe.cpp in Sources */,
+				A6C1AFB51B71D76500F9EDAD /* main_joe.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
