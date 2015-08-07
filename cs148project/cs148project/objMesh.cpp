@@ -55,9 +55,9 @@ void objMesh::init(std::string objFile, GLuint shaderProg, std::string texFile){
     // Bind texture
     SimpleImage texImg(texFile);
     
-    GLuint texture;
-    glGenTextures(1, &texture);
-    glBindTexture(GL_TEXTURE_2D, texture);
+    std::cout << "Texture #:" << vao << std::endl;
+    glGenTextures(1, &textureIndex);
+    glBindTexture(GL_TEXTURE_2D, textureIndex);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -76,6 +76,7 @@ void objMesh::init(std::string objFile, GLuint shaderProg, std::string texFile){
 
 void objMesh::draw(){
   glBindVertexArray(vao);
+  glBindTexture(GL_TEXTURE_2D, textureIndex);
   glDrawArrays(GL_TRIANGLES, 0, nVertices);
   glBindVertexArray(0);
 }

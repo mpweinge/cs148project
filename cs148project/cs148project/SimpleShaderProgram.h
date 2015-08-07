@@ -7,9 +7,13 @@
  * GLEW must be included before the standard GL.h header.
  */
 
+
 //#include <OpenGL/gl.h>
+#include <OpenGL/gl3.h>
+#include <GLFW/glfw3.h>
 #include <GL/gl.h>
-//#include <OpenGL/glu.h>
+#include <OpenGL/glext.h>
+
 #include <GL/glu.h>
 #include <string>
 #include <vector>
@@ -18,6 +22,7 @@
 #include <fstream>
 #include <sstream>
 #include "constants.h"
+#include <iostream>
 
 /**
  * SimpleShaderProgram - class to use GLSL programs.

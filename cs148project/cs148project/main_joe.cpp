@@ -10,6 +10,7 @@
 #define GLEW_VERSION_2_0 1
 #define USE_TESS
 
+
 // Standard libs
 #include <stdio.h>
 #include <iostream>
@@ -35,6 +36,8 @@
  // Custom libs
 #include "SimpleShaderProgram.h"
 #include "objMesh.hpp"
+#include "projectile.hpp"
+#include "constants.h"
 
 // Window management
 GLFWwindow* gWindow = NULL;
@@ -42,7 +45,7 @@ GLFWwindow* gWindow = NULL;
 // Displaying
 SimpleShaderProgram *gpShader;
 glm::mat4 projection;
-glm::mat4 modelView;
+glm::mat4 view;
 static const int winWidth = 600; // px
 static const int winHeight = 400;
 static const glm::vec2 winCenter(winWidth/2.0, winHeight/2.0);
@@ -61,11 +64,13 @@ static const float degToRad = M_PI / 180.0;
 static bool orientationActive = false;
 
 // Objects for rendering objects
-GLuint triangleBuffer;
+float groundLevel = -1.0;
 objMesh groundPlane;
 const std::string groundObjFile = "../../cs148project/groundPlane.obj";
 const std::string groundTexFile = "../../cs148project/square_stones.png";
-
+std::vector<projectile*> projectiles;
+void launchProjectile(); // prototpye
+SimpleShaderProgram *pshader; // Shader for projectiles
 
 // Testing -- delete later
 static float zdist = 25.0;
@@ -92,9 +97,8 @@ void cursor_position_callback(GLFWwindow *win, double x, double y){
 
 void onMouseButton(GLFWwindow *win, int button, int action, int mods){
   if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS){
-    gpShader->Bind();
-    gpShader->SetUniform("touchLocation", 0.0, 0.0, zdist);
-    gpShader->UnBind();
+    std::cout << "Launching projectile " << std::endl;
+    launchProjectile();
   }
   
 }
@@ -121,16 +125,29 @@ void key_callback(GLFWwindow *win, int key, int scancode, int action, int mods){
 
 /******************* Display Update *******************/
 
+void launchProjectile(){
+  projectile *p = new projectile(pshader, "../../cs148project/cylinder.obj", "../../cs148project/blue.png");
+  // Position
+  glm::mat4 viewInv = glm::inverse(view);
+  glm::vec4 initPos = viewInv * glm::vec4(dx, 0.0, 1.0, 0.0);
+  p->setPosition(glm::vec3(initPos[0], initPos[1], initPos[2]));
+  p->setOrientationEuler(glm::vec3(orientation[1]* degToRad, -orientation[0]* degToRad, 0.0));
+  // Velocity
+  glm::vec4 vel = viewInv * glm::vec4(0.0, 0.0, 5.0, 0.0);
+  p->setVelocity(glm::vec3(vel[0], vel[1], vel[2]));
+  projectiles.push_back(p);
+}
+
 inline void translateModel(double tx, double ty, double tz){
-  modelView = glm::translate(modelView, glm::vec3(-tx, -ty, -tz));
+  view = glm::translate(view, glm::vec3(-tx, -ty, -tz));
 }
 
 inline void rotateModel(float ang, glm::vec3 axis){
-  modelView = glm::rotate(modelView, ang * degToRad, axis);
+  view = glm::rotate(view, ang * degToRad, axis);
 }
 
 inline void resetModel(){
-  modelView = glm::lookAt(glm::vec3(0.0, 0.0, 0.0),
+  view = glm::lookAt(glm::vec3(0.0, 0.0, 0.0),
                           glm::vec3(0.0, 0.0, 1.0),
                           glm::vec3(0.0, -1.0, 0.0));
 }
@@ -142,7 +159,7 @@ void setProjection(double zoom){
 
 // Be sure to bind before calling this
 void updateUniformMatrices(){
-  gpShader->SetUniformMatrix4fv("Modelview", glm::value_ptr(modelView));
+  gpShader->SetUniformMatrix4fv("Modelview", glm::value_ptr(view));
   gpShader->SetUniformMatrix4fv("Projection", glm::value_ptr(projection));
 }
 
@@ -150,8 +167,9 @@ void display(){
   
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
   
-  // Update view from callback updates
+  // Set matrix based on view
   resetModel();
+  
   rotateModel(-orientation[1], glm::vec3(1.0, 0.0, 0.0));
   rotateModel(orientation[0], glm::vec3(0.0, 1.0, 0.0));
   translateModel(-dx, 0.0, 0.0);
@@ -161,6 +179,20 @@ void display(){
   updateUniformMatrices();
   groundPlane.draw();
   gpShader->UnBind();
+  
+  // Projectiles
+  for (size_t i = 0; i < projectiles.size(); i++){
+    // If below ground, delete
+    glm::vec3 pos = projectiles[i]->getPosition();
+    if (-pos[1] < groundLevel){
+      delete projectiles[i];
+      std::cout << "Deleting projectile\n";
+      projectiles.erase(projectiles.begin() + i);
+    }
+    // Otherwise, draw
+    projectiles[i]->draw(view, projection);
+  }
+  
   
 }
 
@@ -173,8 +205,15 @@ void glSetup() {
   gpShader->LoadVertexShader(vertexShaderPath);
   gpShader->LoadFragmentShader(fragmentShaderPath);
   //gpShader->LoadTesselationShaders(tessControlShaderPath, tessEvalShaderPath, geometryShaderPath);
+  
   groundPlane.init(groundObjFile, gpShader->programid, groundTexFile);
   
+  // Projectile
+  pshader = new SimpleShaderProgram();
+  pshader->LoadVertexShader(vertexShaderPath);
+  pshader->LoadFragmentShader(fragmentShaderPath);
+
+
   // Initial view
   setProjection(1.0);
   
@@ -239,4 +278,5 @@ int main(int argc,  char * argv[]) {
   // clean up and exit
   glfwDestroyWindow(gWindow);
   glfwTerminate();
+    
 }

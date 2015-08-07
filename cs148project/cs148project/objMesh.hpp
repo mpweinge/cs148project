@@ -49,7 +49,8 @@ private:
   
   bool parseFile(std::string fname);
   vector3 cross(vector3 a, vector3 b);
-  GLuint vao;
+  GLuint vao;  
+  GLuint textureIndex;
   
 };
 

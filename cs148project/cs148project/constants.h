@@ -10,6 +10,7 @@
 #define cs148project_constants_h
 
 #include <vector>
+#include <GL/glu.h>
 
 #define GLEW_VERSION_2_0 1
 
@@ -21,7 +22,7 @@ const std::string fragmentShaderPath = "../../cs148project/fragment.shader";
 const std::string tessControlShaderPath = "../../cs148project/tess_control.shader";
 const std::string tessEvalShaderPath = "../../cs148project/tess_eval.shader";
 const std::string geometryShaderPath = "../../cs148project/geometry.shader";
-
+/*
 const int icoFaces[] = {
     2, 1, 0,
     3, 2, 0,
@@ -166,5 +167,5 @@ void screenToWorld(GLdouble x, GLdouble y, GLdouble & nearPointX, GLdouble & nea
     
     gluUnProject(x,y,winZ,modelViewMatrix, projectionMatrix, viewportMatrix, &nearPointX,  &nearPointY, &nearPointZ);
 }
-
+*/
 #endif

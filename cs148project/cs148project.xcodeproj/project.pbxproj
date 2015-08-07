@@ -13,6 +13,8 @@
 		CF253D361B742772005E6DA9 /* SimpleImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CF253D351B742772005E6DA9 /* SimpleImage.cpp */; };
 		CF253D3A1B7427AA005E6DA9 /* stb.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CF253D391B7427AA005E6DA9 /* stb.cpp */; };
 		CF253D421B74A03E005E6DA9 /* objMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CF253D411B74A03E005E6DA9 /* objMesh.cpp */; };
+		CF253D491B755553005E6DA9 /* movingObjectBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CF253D481B755553005E6DA9 /* movingObjectBase.cpp */; };
+		CF253D4C1B755A5B005E6DA9 /* projectile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CF253D4A1B755A5B005E6DA9 /* projectile.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -51,8 +53,13 @@
 		CF253D431B74A0C9005E6DA9 /* DataStructs.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DataStructs.hpp; sourceTree = "<group>"; };
 		CF253D441B7546CF005E6DA9 /* groundPlane.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = groundPlane.obj; sourceTree = "<group>"; };
 		CF253D451B754A73005E6DA9 /* square_stones.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = square_stones.png; sourceTree = "<group>"; };
+		CF253D471B75526D005E6DA9 /* movingObjectBase.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = movingObjectBase.hpp; sourceTree = "<group>"; };
+		CF253D481B755553005E6DA9 /* movingObjectBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = movingObjectBase.cpp; sourceTree = "<group>"; };
+		CF253D4A1B755A5B005E6DA9 /* projectile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = projectile.cpp; sourceTree = "<group>"; };
+		CF253D4B1B755A5B005E6DA9 /* projectile.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = projectile.hpp; sourceTree = "<group>"; };
+		CF253D4D1B7563F9005E6DA9 /* cylinder.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cylinder.obj; sourceTree = "<group>"; };
 		CF404C541B6EC6820019FF06 /* main_joe.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main_joe.cpp; sourceTree = "<group>"; };
-		CF404C5B1B7005BB0019FF06 /* constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = constants.h; path = cs148project/constants.h; sourceTree = "<group>"; };
+		CF404C5B1B7005BB0019FF06 /* constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = constants.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,7 +78,6 @@
 		A61F0DF81B6D6691001989CB = {
 			isa = PBXGroup;
 			children = (
-				CF404C5B1B7005BB0019FF06 /* constants.h */,
 				A61F0E251B6EB43E001989CB /* libglfw3.a */,
 				A61F0E0F1B6D6891001989CB /* OpenGL.framework */,
 				A61F0E031B6D6691001989CB /* cs148project */,
@@ -90,6 +96,8 @@
 		A61F0E031B6D6691001989CB /* cs148project */ = {
 			isa = PBXGroup;
 			children = (
+				CF404C5B1B7005BB0019FF06 /* constants.h */,
+				CF253D461B7551AC005E6DA9 /* movingObject */,
 				CF253D3E1B742BF7005E6DA9 /* textures */,
 				CF253D3B1B74280A005E6DA9 /* utils */,
 				A61F0E241B6EAA03001989CB /* glm */,
@@ -132,6 +140,7 @@
 		CF253D3D1B742837005E6DA9 /* meshes */ = {
 			isa = PBXGroup;
 			children = (
+				CF253D4D1B7563F9005E6DA9 /* cylinder.obj */,
 				A61F0E131B6D77FE001989CB /* cube.obj */,
 				CF253D441B7546CF005E6DA9 /* groundPlane.obj */,
 			);
@@ -145,6 +154,17 @@
 				CF253D3F1B742CAD005E6DA9 /* blue.png */,
 			);
 			name = textures;
+			sourceTree = "<group>";
+		};
+		CF253D461B7551AC005E6DA9 /* movingObject */ = {
+			isa = PBXGroup;
+			children = (
+				CF253D471B75526D005E6DA9 /* movingObjectBase.hpp */,
+				CF253D481B755553005E6DA9 /* movingObjectBase.cpp */,
+				CF253D4A1B755A5B005E6DA9 /* projectile.cpp */,
+				CF253D4B1B755A5B005E6DA9 /* projectile.hpp */,
+			);
+			name = movingObject;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -203,10 +223,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6C1AFB51B71D76500F9EDAD /* main_joe.cpp in Sources */,
 				CF253D3A1B7427AA005E6DA9 /* stb.cpp in Sources */,
 				CF253D361B742772005E6DA9 /* SimpleImage.cpp in Sources */,
-				A6C1AFB51B71D76500F9EDAD /* main_joe.cpp in Sources */,
 				CF253D421B74A03E005E6DA9 /* objMesh.cpp in Sources */,
+				CF253D4C1B755A5B005E6DA9 /* projectile.cpp in Sources */,
+				CF253D491B755553005E6DA9 /* movingObjectBase.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -305,7 +327,10 @@
 					/opt/X11/lib,
 					"$(PROJECT_DIR)/cs148project",
 				);
-				OTHER_LDFLAGS = "-lglfw3";
+				OTHER_LDFLAGS = (
+					"-lglfw3",
+					"-v",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -324,7 +349,10 @@
 					/opt/X11/lib,
 					"$(PROJECT_DIR)/cs148project",
 				);
-				OTHER_LDFLAGS = "-lglfw3";
+				OTHER_LDFLAGS = (
+					"-lglfw3",
+					"-v",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
