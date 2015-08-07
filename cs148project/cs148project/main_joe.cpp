@@ -8,6 +8,7 @@
 
 // Flag(s)
 #define GLEW_VERSION_2_0 1
+#define USE_TESS
 
 // Standard libs
 #include <stdio.h>
@@ -33,12 +34,13 @@
 
  // Custom libs
 #include "SimpleShaderProgram.h"
+#include "objMesh.hpp"
 
 // Window management
 GLFWwindow* gWindow = NULL;
 
 // Displaying
-SimpleShaderProgram *shader;
+SimpleShaderProgram *gpShader;
 glm::mat4 projection;
 glm::mat4 modelView;
 static const int winWidth = 600; // px
@@ -57,6 +59,13 @@ static const float pixelToDeg = 0.1;
 static glm::vec2 mouseLimits(10.0 / pixelToDeg, 7.0 / pixelToDeg); // x, y
 static const float degToRad = M_PI / 180.0;
 static bool orientationActive = false;
+
+// Objects for rendering objects
+GLuint triangleBuffer;
+objMesh groundPlane;
+const std::string groundObjFile = "../../cs148project/groundPlane.obj";
+const std::string groundTexFile = "../../cs148project/square_stones.png";
+
 
 // Testing -- delete later
 static float zdist = 25.0;
@@ -83,9 +92,9 @@ void cursor_position_callback(GLFWwindow *win, double x, double y){
 
 void onMouseButton(GLFWwindow *win, int button, int action, int mods){
   if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS){
-    shader->Bind();
-    shader->SetUniform("touchLocation", 0.0, 0.0, zdist);
-    shader->UnBind();
+    gpShader->Bind();
+    gpShader->SetUniform("touchLocation", 0.0, 0.0, zdist);
+    gpShader->UnBind();
   }
   
 }
@@ -133,26 +142,8 @@ void setProjection(double zoom){
 
 // Be sure to bind before calling this
 void updateUniformMatrices(){
-  shader->SetUniformMatrix4fv("Modelview", glm::value_ptr(modelView));
-  shader->SetUniformMatrix4fv("Projection", glm::value_ptr(projection));
-}
-
-// Called during initialization
-void bufferVertices(){
-  
-  // Create Vertex array object
-  GLuint buffer;
-  glGenBuffers(1, &buffer);
-  glBindBuffer(GL_ARRAY_BUFFER, buffer);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(triVerts), triVerts, GL_STATIC_DRAW);  glEnableVertexAttribArray(0);
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
-  
-  GLuint vao = 0;
-  glGenVertexArrays (1, &vao);
-  glBindVertexArray (vao);
-  glEnableVertexAttribArray (0);
-  glBindBuffer (GL_ARRAY_BUFFER, buffer);
-  glVertexAttribPointer (0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+  gpShader->SetUniformMatrix4fv("Modelview", glm::value_ptr(modelView));
+  gpShader->SetUniformMatrix4fv("Projection", glm::value_ptr(projection));
 }
 
 void display(){
@@ -166,10 +157,10 @@ void display(){
   translateModel(-dx, 0.0, 0.0);
   
   // Drawing
-  shader->Bind();
+  gpShader->Bind();
   updateUniformMatrices();
-  glDrawArrays(GL_PATCHES, 0, 3);
-  shader->UnBind();
+  groundPlane.draw();
+  gpShader->UnBind();
   
 }
 
@@ -177,23 +168,23 @@ void display(){
 
 void glSetup() {
   
-  // Shader(s)
-  shader = new SimpleShaderProgram();
-  shader->LoadVertexShader(vertexShaderPath);
-  shader->LoadFragmentShader(fragmentShaderPath);
-  shader->LoadTesselationShaders(tessControlShaderPath, tessEvalShaderPath, geometryShaderPath);
+  // Ground plane
+  gpShader = new SimpleShaderProgram();
+  gpShader->LoadVertexShader(vertexShaderPath);
+  gpShader->LoadFragmentShader(fragmentShaderPath);
+  //gpShader->LoadTesselationShaders(tessControlShaderPath, tessEvalShaderPath, geometryShaderPath);
+  groundPlane.init(groundObjFile, gpShader->programid, groundTexFile);
   
   // Initial view
   setProjection(1.0);
   
   // Rendering params
   glClearColor(0, 0.0, 0.0, 1);
-  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+  glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
   glPatchParameteri(GL_PATCH_VERTICES, 3);
   glEnable(GL_DEPTH_TEST);
   
-  // Load triangle into buffer
-  bufferVertices();
+  glEnableClientState(GL_VERTEX_ARRAY);
 
 }
 
@@ -231,12 +222,11 @@ void glfwSetup(){
   
 }
 
-
 int main(int argc,  char * argv[]) {
   // Set up window
   glfwSetup();
   
-  // Initialize GL (shaders, lights, vertices, etc.)
+  // Initialize GL (gpShaders, lights, vertices, etc.)
   glSetup();
   
   // glfw loop

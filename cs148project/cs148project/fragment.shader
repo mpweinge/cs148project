@@ -3,7 +3,14 @@
 //out vec4 FragColor;
 //layout(location = 0, index = 0)
 
+uniform sampler2D tex;
+
+in vec3 vPosition;
+in vec2 texcoord;
+
 out vec4 FragColor;
+
+
 
 /*in vec3 gFacetNormal;
 in vec3 gTriDistance;
@@ -32,6 +39,17 @@ void main()
     float d2 = min(min(gPatchDistance.x, gPatchDistance.y), gPatchDistance.z);
     color = amplify(d1, 40, -0.5) * amplify(d2, 60, -0.5) * color;*/
 
-    FragColor = vec4(1.0, 0.0, 1.0, 1.0);
-    //gl_FragColor = vec4(0.0, 1.0, 1.0, 1.0);
+//    FragColor = vec4(1.0, 0.0, 1.0, 1.0);
+
+  // Use texture
+  FragColor = texture(tex, texcoord);
+  
+  // Debug Texture
+//  vec4 a = vec4(1.0, 1.0, 1.0, 1.0);
+//  vec4 b = vec4(1.0, 0.0, 0.0, 1.0);
+//  
+//  if (texcoord.x > 1)
+//    FragColor = a;
+//  else
+//    FragColor = b;
 }

@@ -1,0 +1,24 @@
+# Width = 8
+# Depth = 20.0
+# Height = -1.0
+# Texture = 1 meter x 1 meter
+
+# (1) Close left
+v -4.0 -1.0 0.0
+vt 0.0 0.0
+
+# (2) Close right
+v 4.0 -1.0 0.0
+vt 8.0 0.0
+
+# (3) Far left
+v -4.0 -1.0 20.0
+vt 0.0 20.0
+
+# (4) Far right
+v 4.0 -1.0 20.0
+vt 8.0 20.0
+
+# Faces
+f 1//1 2//2 3//3
+f 2//2 3//3 4//4
