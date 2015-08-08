@@ -41,14 +41,15 @@
 
 // Window management
 GLFWwindow* gWindow = NULL;
+static bool playing = false;
 
 // Displaying
 SimpleShaderProgram *gpShader;
 glm::mat4 projection;
 glm::mat4 view;
-static const int winWidth = 600; // px
-static const int winHeight = 400;
-static const glm::vec2 winCenter(winWidth/2.0, winHeight/2.0);
+static int winWidth = 600; // px
+static int winHeight = 400;
+static glm::vec2 winCenter(winWidth/2.0, winHeight/2.0);
 static const float nearPlane = 0.1;
 
 // Strafe
@@ -61,34 +62,22 @@ static glm::vec2 orientation(0.0, 0.0); // yaw, pitch (deg)
 static const float pixelToDeg = 0.1;
 static glm::vec2 mouseLimits(10.0 / pixelToDeg, 7.0 / pixelToDeg); // x, y
 static const float degToRad = M_PI / 180.0;
-static bool orientationActive = false;
 
 // Objects for rendering objects
 float groundLevel = -1.0;
 objMesh groundPlane;
-const std::string groundObjFile = "../../cs148project/groundPlane.obj";
-const std::string groundTexFile = "../../cs148project/square_stones.png";
-const std::string projectileObjFile = "../../cs148project/cylinder.obj";
-const std::string projectileTexFile = "../../cs148project/blue.png";
-const std::string targetObjFile = "../../cs148project/cube.obj";
-const std::string targetTexFile = "../../cs148project/blue.png";
 std::vector<projectile*> projectiles;
 std::vector<target*> targets;
 void launchProjectile(); // prototpye
 SimpleShaderProgram *pshader, *tshader; // Shader for projectiles and targets
 
-// Testing -- delete later
-static float zdist = 25.0;
-float triVerts[] = {-0.5, -0.5, zdist,
-                     0.5, -0.5, zdist,
-                     0.0,  0.5, zdist};
 
 /******************* GLFW Callbacks ********************/
 inline double abs(double x){ return x < 0 ? -x : x; };
 
 void cursor_position_callback(GLFWwindow *win, double x, double y){
   // Check if we should activate motion via mouse
-  if (!orientationActive) return;
+  if (!playing) return;
   // Distance from center
   glm::vec2 mousePos = glm::vec2(x, y) - winCenter;
   // Clamp
@@ -101,24 +90,30 @@ void cursor_position_callback(GLFWwindow *win, double x, double y){
  }
 
 void onMouseButton(GLFWwindow *win, int button, int action, int mods){
-  if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS){
+  if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS && playing){
     std::cout << "Launching projectile " << std::endl;
     launchProjectile();
   }
   
 }
 
-void cursor_enter_callback(GLFWwindow* window, int entered){
-  if (entered && !orientationActive){
-    glfwSetInputMode(gWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-    orientationActive = true;
-  }
-}
-
 void key_callback(GLFWwindow *win, int key, int scancode, int action, int mods){
   // Only want press or hold down
   if (action != GLFW_PRESS && action != GLFW_REPEAT)
     return;
+  // Play/pause
+  if (key == GLFW_KEY_P){
+    if (playing == false){
+      glfwSetInputMode(gWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+      playing = true;
+    }
+    else {
+      glfwSetInputMode(gWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+      playing = false;
+    }
+  }
+  // Keys don't work when pause
+  if (!playing) return;
   // Strafe (within limits)
   if (key == GLFW_KEY_LEFT && dx > -xmax)
     dx -= xstep;
@@ -126,6 +121,12 @@ void key_callback(GLFWwindow *win, int key, int scancode, int action, int mods){
     dx += xstep;
   else if (key == GLFW_KEY_Q)
     glfwSetWindowShouldClose(gWindow, 1);
+}
+
+void window_resize_callback(GLFWwindow *w, int x, int y){
+  winWidth = x;
+  winHeight = y;
+  winCenter = glm::vec2(winWidth/2.0, winHeight/2.0);
 }
 
 /******************* Display Update *******************/
@@ -170,7 +171,10 @@ void updateUniformMatrices(){
 
 void display(){
   
+  if (!playing) return;
+  
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  
   
   // Set matrix based on view
   resetModel();
@@ -201,8 +205,6 @@ void display(){
   // Targets
   for (size_t i = 0; i < targets.size(); i++){
     targets[i]->draw(view, projection);
-//    glm::vec3 p = targets[i]->getPosition();
-//    std::cout << p[0] << ", " << p[1] << ", " << p[2] << std::endl;
   }
   
   
@@ -284,7 +286,7 @@ void glfwSetup(){
   glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
   glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
-  glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+  glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
   
   // Create window
   gWindow = glfwCreateWindow(winWidth, winHeight, "Task Shooting", NULL, NULL);
@@ -301,11 +303,11 @@ void glfwSetup(){
 #endif
   
   // Set up callbacks
-  //glfwSetInputMode(gWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+  glfwSetInputMode(gWindow, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
   glfwSetCursorPosCallback(gWindow, cursor_position_callback);
   glfwSetMouseButtonCallback(gWindow, onMouseButton);
   glfwSetKeyCallback(gWindow, key_callback);
-  glfwSetCursorEnterCallback(gWindow, cursor_enter_callback);
+  glfwSetFramebufferSizeCallback(gWindow, window_resize_callback);
   
 }
 
