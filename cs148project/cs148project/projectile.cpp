@@ -23,6 +23,13 @@ projectile::projectile(SimpleShaderProgram *projShader, std::string objName, std
 
 void projectile::draw(glm::mat4 viewMat, glm::mat4 projMat){
   
+  // Keep the orientation such that it stays along the current velocity direction
+  if(glm::length(velocity) > 0){
+    float yawDes = glm::atan(velocity[0] / velocity[2]);
+    float pitchDes = glm::atan(velocity[1] / velocity[2]);
+    setOrientationEuler(glm::vec3(-pitchDes, yawDes, 0.0));
+  }
+  
   updateState();
   
   pshader->Bind();

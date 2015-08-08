@@ -38,7 +38,7 @@ public:
   glm::vec3 getPosition() {return position; }
   glm::mat4 getModelMat() {return modelMat; }
   
-private:
+protected:
   glm::vec3 position;
   glm::vec3 velocity;
   glm::vec3 acceleration;
@@ -49,7 +49,6 @@ private:
   glm::mat4 modelMat;
   float t_last = -1.0;
 
-protected:
   void updateState();
   void init();
   

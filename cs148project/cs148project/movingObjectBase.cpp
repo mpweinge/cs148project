@@ -43,7 +43,7 @@ void movingObjectBase::updateState(){
   float dt = (t - t_last) / 1e6;
   
   assert(dt >= 0.0);
-    
+  
   // Update pos/vel
   position += dt * velocity;
   velocity += dt * acceleration;
