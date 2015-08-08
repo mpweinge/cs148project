@@ -10,7 +10,6 @@
 #define GLEW_VERSION_2_0 1
 #define USE_TESS
 
-
 // Standard libs
 #include <stdio.h>
 #include <iostream>
@@ -37,6 +36,7 @@
 #include "SimpleShaderProgram.h"
 #include "objMesh.hpp"
 #include "projectile.hpp"
+#include "target.h"
 #include "constants.h"
 
 // Window management
@@ -68,9 +68,14 @@ float groundLevel = -1.0;
 objMesh groundPlane;
 const std::string groundObjFile = "../../cs148project/groundPlane.obj";
 const std::string groundTexFile = "../../cs148project/square_stones.png";
+const std::string projectileObjFile = "../../cs148project/cylinder.obj";
+const std::string projectileTexFile = "../../cs148project/blue.png";
+const std::string targetObjFile = "../../cs148project/cube.obj";
+const std::string targetTexFile = "../../cs148project/blue.png";
 std::vector<projectile*> projectiles;
+std::vector<target*> targets;
 void launchProjectile(); // prototpye
-SimpleShaderProgram *pshader; // Shader for projectiles
+SimpleShaderProgram *pshader, *tshader; // Shader for projectiles and targets
 
 // Testing -- delete later
 static float zdist = 25.0;
@@ -126,7 +131,7 @@ void key_callback(GLFWwindow *win, int key, int scancode, int action, int mods){
 /******************* Display Update *******************/
 
 void launchProjectile(){
-  projectile *p = new projectile(pshader, "../../cs148project/cylinder.obj", "../../cs148project/blue.png");
+  projectile *p = new projectile(pshader, projectileObjFile, projectileTexFile);
   // Position
   glm::mat4 viewInv = glm::inverse(view);
   glm::vec4 initPos = viewInv * glm::vec4(dx, 0.0, 1.0, 0.0);
@@ -193,10 +198,51 @@ void display(){
     projectiles[i]->draw(view, projection);
   }
   
+  // Targets
+  for (size_t i = 0; i < targets.size(); i++){
+    targets[i]->draw(view, projection);
+//    glm::vec3 p = targets[i]->getPosition();
+//    std::cout << p[0] << ", " << p[1] << ", " << p[2] << std::endl;
+  }
+  
   
 }
 
 /**************** Initialization Functions *************/
+
+void createTargets(){
+  // Target
+  tshader = new SimpleShaderProgram();
+  tshader->LoadVertexShader(vertexShaderPath);
+  tshader->LoadFragmentShader(fragmentShaderPath);
+  
+  // Glide back and forth along x at fixed depth
+  std::vector<glm::vec3> traj;
+  glm::vec3 p11 = glm::vec3(-3.0, 0.0, -15.0);
+  glm::vec3 p12 = glm::vec3(3.0, 0.0, -15.0);
+  traj.push_back(p11);
+  traj.push_back(p12);
+  traj.push_back(p11); // Loop
+  target *t = new target(tshader, targetObjFile, targetTexFile);
+  t->loadTraj(traj, 0.2);
+  targets.push_back(t);
+  
+  // Go in a fast square
+  glm::vec3 p21(-2.0, 0.5, -12.0);
+  glm::vec3 p22(2.0, 0.5, -12.0);
+  glm::vec3 p23(2.0, -3.5, -12.0);
+  glm::vec3 p24(-2.0, -3.5, -12.0);
+  traj.clear();
+  traj.push_back(p21);
+  traj.push_back(p22);
+  traj.push_back(p23);
+  traj.push_back(p24);
+  traj.push_back(p21);
+  t = new target(tshader, targetObjFile, targetTexFile);
+  t->loadTraj(traj, 0.8);
+  targets.push_back(t);
+  
+}
 
 void glSetup() {
   
@@ -212,6 +258,8 @@ void glSetup() {
   pshader = new SimpleShaderProgram();
   pshader->LoadVertexShader(vertexShaderPath);
   pshader->LoadFragmentShader(fragmentShaderPath);
+  
+  createTargets();
 
 
   // Initial view
