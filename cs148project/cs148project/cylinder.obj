@@ -2,11 +2,11 @@
 # Exported from SketchUp, (c) 2000-2012 Trimble Navigation Limited
 # File units = meters
 
-#mtllib cylinder.mtl
+# mtllib cylinder.mtl
 
-#g Mesh1 Model
+# g Mesh1 Model
 
-#usemtl FrontColor
+# usemtl FrontColor
 v -0.0965926 0.0258819 -0.5
 vt 3.80286 1.01897
 vn 0 0 -1
