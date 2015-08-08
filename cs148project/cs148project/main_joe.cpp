@@ -204,6 +204,13 @@ void display(){
   
   // Targets
   for (size_t i = 0; i < targets.size(); i++){
+    // Check if it has collided with a projectile
+    for (size_t j = 0; j < projectiles.size(); j++){
+      if (sphereCollision(targets[i], projectiles[j])){
+        targets.erase(targets.begin() + i);
+        break;
+      }
+    }
     targets[i]->draw(view, projection);
   }
   

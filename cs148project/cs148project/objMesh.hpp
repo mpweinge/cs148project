@@ -23,6 +23,7 @@
 #include "DataStructs.hpp"
 
 
+
 /* Usage Notes:
  - The array buffers for position, normals, and texture coordinates are expecting the shaders
    to use:
@@ -39,6 +40,8 @@ public:
   void init(std::string objFile, GLuint shaderProg, std::string texFile = "");
   void draw();
   ~objMesh();
+  // Distance from 0,0,0 to farthest point
+  float radius = 0.0;
   
 private:
   float *vertices;

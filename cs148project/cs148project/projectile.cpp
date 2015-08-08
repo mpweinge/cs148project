@@ -21,6 +21,10 @@ projectile::projectile(SimpleShaderProgram *projShader, std::string objName, std
   setAcceleration(0.05f * (glm::vec3(0.0, 9.81, 0.0)));
 }
 
+float projectile::getRadius() {
+  return mesh.radius;
+}
+
 void projectile::draw(glm::mat4 viewMat, glm::mat4 projMat){
   
   // Keep the orientation such that it stays along the current velocity direction

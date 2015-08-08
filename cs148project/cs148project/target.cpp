@@ -19,6 +19,10 @@ target::target(SimpleShaderProgram *targShader, std::string objName, std::string
   
 }
 
+float target::getRadius() {
+  return mesh.radius;
+}
+
 void target::loadTraj(std::vector<glm::vec3> &traj, float trajSpeed){
   // Store
   trajectory = traj;

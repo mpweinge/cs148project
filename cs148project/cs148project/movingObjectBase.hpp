@@ -27,7 +27,7 @@
 class movingObjectBase {
   
 public:
-  // Liniear
+  // Linear
   void setPosition(glm::vec3 pos) {position = pos;}
   void setVelocity(glm::vec3 vel) {velocity = vel;}
   void setAcceleration(glm::vec3 acc) {acceleration = acc;}
@@ -37,6 +37,7 @@ public:
   void setAlpha(glm::vec3 al) {alpha = al; }
   glm::vec3 getPosition() {return position; }
   glm::mat4 getModelMat() {return modelMat; }
+  virtual float getRadius() {return 0.0;}
   
 protected:
   glm::vec3 position;
@@ -52,6 +53,13 @@ protected:
   void updateState();
   void init();
   
+  // For collision detection
+  float radius = 0;
+  void calculateBoxLimits();
+  glm::vec2 boxLimits[3];
+  
 };
 
+// True if with radii of each other
+bool sphereCollision(movingObjectBase *a, movingObjectBase *b);
 #endif

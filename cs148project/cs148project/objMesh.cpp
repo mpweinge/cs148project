@@ -218,7 +218,10 @@ bool objMesh::parseFile(std::string fname){
   size_t tex_counter = 0;
   for(std::vector<face>::iterator f = faces.begin(); f != faces.end(); f++){
     for (size_t vert = 0; vert < 3; vert++){
+      float normSquared = 0;
       for (size_t d = 0; d < 3; d++){
+        // Update normSquare
+        normSquared += powf(f->vert[vert][d], 2.0);
         vertices[array_counter] = f->vert[vert][d];
         normals[array_counter] = f->norm[vert][d];
         array_counter++;
@@ -227,8 +230,13 @@ bool objMesh::parseFile(std::string fname){
           tex_counter++;
         }
       }
+      // Update radius
+      if (normSquared > radius)
+        radius = normSquared;
     }
   }
+  // Radius is currently squared
+  radius = powf(radius, 0.5);
   
   return true;
   

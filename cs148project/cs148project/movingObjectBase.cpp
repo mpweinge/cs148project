@@ -59,3 +59,9 @@ void movingObjectBase::updateState(){
   t_last = t;
   
 }
+
+// True if with radii of each other
+bool sphereCollision(movingObjectBase *a, movingObjectBase *b){
+  float cdist = glm::length(a->getPosition() - b->getPosition());
+  return cdist < (a->getRadius() + b->getRadius());
+}

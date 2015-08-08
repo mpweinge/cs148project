@@ -25,6 +25,8 @@ public:
   target(SimpleShaderProgram *projShader, std::string objName, std::string texName = "");
   void draw(glm::mat4 viewMat, glm::mat4 projMat);
   void loadTraj(std::vector<glm::vec3> &traj, float trajSpeed);
+  virtual float getRadius();
+  
 private:
   objMesh mesh;
   SimpleShaderProgram *tshader;

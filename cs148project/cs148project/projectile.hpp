@@ -20,6 +20,8 @@ class projectile : public movingObjectBase {
 public:
   projectile(SimpleShaderProgram *projShader, std::string objName, std::string texName = "");
   void draw(glm::mat4 viewMat, glm::mat4 projMat);
+  virtual float getRadius();
+  
 private:
   objMesh mesh;
   SimpleShaderProgram *pshader;
