@@ -8,11 +8,11 @@ in vec3 Position;
 in vec2 Texcoord;
 
 out vec3 vPosition;
-out vec2 texcoord;
+out vec2 texcoord_FS;
 
 void main()
 {
   gl_Position = Projection * Modelview * vec4(Position.xyz,1.0);
   vPosition = gl_Position.xyz;
-  texcoord = Texcoord;
+  texcoord_FS = Texcoord;
 }

@@ -4,6 +4,9 @@ layout(vertices = 3) out;
 //in vec3 vPosition[];
 //out vec3 tcPosition[];
 
+in vec2 TexCoord_TC[];
+out vec2 texcoord_ES[];
+
 //uniform vec3 touchLocation;
 //uniform float test;
 
@@ -15,6 +18,7 @@ layout(vertices = 3) out;
 void main()
 {
     //tcPosition[gl_InvocationID] = vPosition[gl_InvocationID];
+    texcoord_ES[gl_InvocationID] = TexCoord_TC[gl_InvocationID];
     gl_out[gl_InvocationID].gl_Position = gl_in[gl_InvocationID].gl_Position;
     
     if (gl_InvocationID == 0) {

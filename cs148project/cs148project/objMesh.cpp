@@ -82,7 +82,7 @@ void objMesh::draw(){
 void objMesh::drawTesselation()
 {
   glBindVertexArray(vao);
-  //glBindTexture(GL_TEXTURE_2D, textureIndex);
+  glBindTexture(GL_TEXTURE_2D, textureIndex);
   glPatchParameteri(GL_PATCH_VERTICES, 3);
   glDrawArrays(GL_PATCHES, 0, nVertices);
   glBindVertexArray(0);
