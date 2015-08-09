@@ -19,6 +19,7 @@
 // Shaders
 const std::string objFilename = "../../cs148project/cube.obj";
 const std::string vertexShaderPath = "../../cs148project/vertex.shader";
+const std::string vertexTessShaderPath = "../../cs148project/vertex_tess.shader";
 const std::string fragmentShaderPath = "../../cs148project/fragment.shader";
 const std::string tessControlShaderPath = "../../cs148project/tess_control.shader";
 const std::string tessEvalShaderPath = "../../cs148project/tess_eval.shader";

@@ -43,6 +43,7 @@
 		A61F0E1A1B6DF6EF001989CB /* geometry.shader */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = geometry.shader; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.glsl; };
 		A61F0E241B6EAA03001989CB /* glm */ = {isa = PBXFileReference; lastKnownFileType = folder; path = glm; sourceTree = "<group>"; };
 		A61F0E251B6EB43E001989CB /* libglfw3.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libglfw3.a; path = cs148project/libglfw3.a; sourceTree = "<group>"; };
+		A69F47701B76E64700AF227B /* vertex_tess.shader */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = vertex_tess.shader; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.glsl; };
 		CF253D311B73E3C1005E6DA9 /* SimpleImage.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.h; fileEncoding = 4; path = SimpleImage.h; sourceTree = "<group>"; };
 		CF253D351B742772005E6DA9 /* SimpleImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SimpleImage.cpp; sourceTree = "<group>"; };
 		CF253D371B7427AA005E6DA9 /* stb_image_write.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stb_image_write.h; sourceTree = "<group>"; };
@@ -131,6 +132,7 @@
 		CF253D3C1B74281D005E6DA9 /* shaders */ = {
 			isa = PBXGroup;
 			children = (
+				A69F47701B76E64700AF227B /* vertex_tess.shader */,
 				A61F0E161B6DF6C0001989CB /* vertex.shader */,
 				A61F0E171B6DF6CA001989CB /* fragment.shader */,
 				A61F0E181B6DF6D4001989CB /* tess_control.shader */,

@@ -177,7 +177,8 @@ void display(){
     return;
   }
   
-  
+  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    
   // Set matrix based on view
   resetModel();
   
@@ -224,8 +225,9 @@ void display(){
 void createTargets(){
   // Target
   tshader = new SimpleShaderProgram();
-  tshader->LoadVertexShader(vertexShaderPath);
+  tshader->LoadVertexShader(vertexTessShaderPath);
   tshader->LoadFragmentShader(fragmentShaderPath);
+  tshader->LoadTesselationShaders(tessControlShaderPath, tessEvalShaderPath, geometryShaderPath);
   
   // Glide back and forth along x at fixed depth
   std::vector<glm::vec3> traj;
@@ -337,5 +339,4 @@ int main(int argc,  char * argv[]) {
   // clean up and exit
   glfwDestroyWindow(gWindow);
   glfwTerminate();
-    
 }

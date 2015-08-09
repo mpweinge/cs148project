@@ -31,8 +31,6 @@ float getTimeMicroseconds(){
 
 void movingObjectBase::updateState(){
   
-
-  
   // Get t (in seconds)
   float t = getTimeMicroseconds();
   

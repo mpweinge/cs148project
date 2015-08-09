@@ -144,7 +144,10 @@ public:
   
   void SetUniform(const std::string& name, float value) {
     GLint location = GetUniformLocation(name);
-    if (location == -1) return;
+      if (location == -1) {
+          std::cout << "Failed to set uniform: " + name + ".\n";
+          return;
+      }
     if(GLEW_VERSION_2_0) {
       glUniform1f(location, value);
     }

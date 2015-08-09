@@ -7,8 +7,6 @@
 
 #include "objMesh.hpp"
 
-
-
 void objMesh::init(std::string objFile, GLuint shaderProg, std::string texFile){
   
   // Initiaize flags and pointers
@@ -78,6 +76,15 @@ void objMesh::draw(){
   glBindVertexArray(vao);
   glBindTexture(GL_TEXTURE_2D, textureIndex);
   glDrawArrays(GL_TRIANGLES, 0, nVertices);
+  glBindVertexArray(0);
+}
+
+void objMesh::drawTesselation()
+{
+  glBindVertexArray(vao);
+  //glBindTexture(GL_TEXTURE_2D, textureIndex);
+  glPatchParameteri(GL_PATCH_VERTICES, 3);
+  glDrawArrays(GL_PATCHES, 0, nVertices);
   glBindVertexArray(0);
 }
 

@@ -63,11 +63,13 @@ void target::draw(glm::mat4 viewMat, glm::mat4 projMat){
   
   updateVelocity();
   updateState();
-  
+    
   tshader->Bind();
   glm::mat4 modelView = viewMat * getModelMat();
   tshader->SetUniformMatrix4fv("Modelview", glm::value_ptr(modelView));
   tshader->SetUniformMatrix4fv("Projection", glm::value_ptr(projMat));
-  mesh.draw();
+  mesh.drawTesselation();
+    
+  //When we have tesselation here, we want to call GL_PATCHES instead of GL_TRIANGLES
   tshader->UnBind();
 }

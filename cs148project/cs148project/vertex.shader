@@ -1,4 +1,4 @@
-#version 410
+#version 410 core
 
 uniform mat4 Projection;
 uniform mat4 Modelview;
@@ -12,7 +12,7 @@ out vec2 texcoord;
 
 void main()
 {
-  gl_Position = Projection*Modelview * vec4(Position.xyz,1.0);
+  gl_Position = Projection * Modelview * vec4(Position.xyz,1.0);
   vPosition = gl_Position.xyz;
   texcoord = Texcoord;
 }
