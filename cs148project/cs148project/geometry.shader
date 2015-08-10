@@ -34,6 +34,10 @@ vec3 averageVectorValue(vec3 v0, vec3 v1, vec3 v2)
   return ret;
 }
 
+float rand(vec2 co){
+  return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
+}
+
 void main()
 {
     //vec3 A = tePosition[2] - tePosition[0];
@@ -48,6 +52,14 @@ void main()
   vec3 averageNormal = averageVectorValue(Normal_GS[0], Normal_GS[1], Normal_GS[2]);
   vec3 averageTouchV = averageVectorValue(touchVector_GS[0], touchVector_GS[1], touchVector_GS[2]);
   
+  float randNum1 = rand(averageTess.xy);
+  float randNum2 = rand(averageTess.xz);
+  float randNum3 = rand(averageTess.yz);
+  
+  averageTouchV.x += randNum1 / 2.0;
+  averageTouchV.y += randNum2 / 2.0;
+  averageTouchV.z += randNum3 / 2.0;
+  
   if ((averageNormal.x == 0.0) && (averageNormal.y == 0.0) && (averageNormal.z == 0.0) )
   {
     averageNormal.z = 1.0;
@@ -60,9 +72,9 @@ void main()
     texcoord_FS = texcoord_GS[0];
   
   vec4 offset = vec4(0.0, 0.0, 0.0, 1.0);
-  if (averageTouchDist < 4)
+  //if (averageTouchDist < (timeS))
   {
-     offset = vec4(averageTouchV * timeS * pow(averageTouchDist, 2) + averageTess.x + averageTess.y + averageTess.z, 1.0) / 10.0;
+     offset = vec4(averageTouchV * timeS * pow(averageTouchDist, 3) + averageTess.x + averageTess.y + averageTess.z, 1.0) / 10.0;
     
     //offset = - vec4(0, 0, 0.1, 1.0) * timeS;
   }

@@ -20,7 +20,7 @@ uniform mat4 Model;
 
 float distanceToTouch(vec4 vertexPosition)
 {
-    return (3 - clamp(distance(touchLocation, vertexPosition.xyz), 0, 3)) * 2;
+    return (5 - clamp(distance(touchLocation, vertexPosition.xyz), 0, 5)) * 2;
 }
 
 void main()
