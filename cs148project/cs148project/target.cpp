@@ -59,15 +59,28 @@ void target::updateVelocity(){
   
 }
 
-void target::draw(glm::mat4 viewMat, glm::mat4 projMat){
+void target::draw(glm::mat4 viewMat, glm::mat4 projMat, glm::vec3 touchPoint){
   
   updateVelocity();
   updateState();
     
   tshader->Bind();
   glm::mat4 modelView = viewMat * getModelMat();
+    
+    glm::mat4 model = getModelMat();
+    
+    glm::vec4 projVec = model * glm::vec4(mesh.vertices[0], mesh.vertices[1], mesh.vertices[2], 1.0);
+    
+#ifdef DEBUG_TESS
+    std::cout << "PROJ X: " << projVec.x << " Y: " << projVec.y << " Z: " << projVec.z << std::endl;
+    std::cout << "TOUCH X: " << touchPoint.x << " Y: " << touchPoint.y << " Z: " << touchPoint.z << std::endl;
+    std::cout << "Distance: " << glm::distance(projVec, glm::vec4(touchPoint, 1.0)) << std::endl;
+#endif
+    
+  tshader->SetUniformMatrix4fv("Model", glm::value_ptr(model));
   tshader->SetUniformMatrix4fv("Modelview", glm::value_ptr(modelView));
   tshader->SetUniformMatrix4fv("Projection", glm::value_ptr(projMat));
+  tshader->SetUniform("touchLocation", touchPoint.x, touchPoint.y, touchPoint.z);
   mesh.drawTesselation();
     
   //When we have tesselation here, we want to call GL_PATCHES instead of GL_TRIANGLES

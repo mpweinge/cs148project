@@ -35,6 +35,10 @@ void projectile::draw(glm::mat4 viewMat, glm::mat4 projMat){
   }
   
   updateState();
+    
+#ifdef DEBUG_TESS
+  std::cout << "X: " << position.x << "Y: " << position.y <<"Z: " << position.z << std::endl;
+#endif
   
   pshader->Bind();
   glm::mat4 modelView = viewMat * getModelMat();

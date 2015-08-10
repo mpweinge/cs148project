@@ -71,6 +71,7 @@ std::vector<target*> targets;
 void launchProjectile(); // prototpye
 SimpleShaderProgram *pshader, *tshader; // Shader for projectiles and targets
 
+glm::vec3 touchPoint = glm::vec3(0, 0, 0);
 
 /******************* GLFW Callbacks ********************/
 inline double abs(double x){ return x < 0 ? -x : x; };
@@ -92,9 +93,44 @@ void cursor_position_callback(GLFWwindow *win, double x, double y){
 void onMouseButton(GLFWwindow *win, int button, int action, int mods){
   if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS && playing){
     std::cout << "Launching projectile " << std::endl;
+      
+#ifdef DEBUG_TESS
+      //Here let's log the location of the button press
+      double x, y;
+      glfwGetCursorPos(win, &x, &y);
+      
+      //Translate this xpos and ypos into an x, y, and z position
+      //GLint viewportMatrix[4];
+      
+      //glGetIntegerv(GL_VIEWPORT, viewportMatrix);
+      
+      //y = (float)viewportMatrix[3] - y;
+      
+      GLfloat winZ;
+      
+      glReadPixels(x, y, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ);
+      
+      //winZ = 10;
+      
+      std::cout << "Z: " << winZ << std::endl;
+      
+      glm::vec3 windowCoordinates = glm::vec3(x, y, winZ);
+      glm::vec4 viewport = glm::vec4(0.0f, 0.0f, winWidth, winHeight);
+      glm::vec3 worldCoordinates = glm::unProject(windowCoordinates, view, projection, viewport);
+      
+      float scaleRatio = -10 / worldCoordinates.z;
+      worldCoordinates.x *= scaleRatio;
+      worldCoordinates.y *= scaleRatio;
+      worldCoordinates.z *= scaleRatio;
+      printf("(%f, %f, %f)\n", worldCoordinates.x, worldCoordinates.y, worldCoordinates.z);
+      
+      //Static point in 3d space
+      touchPoint = glm::vec3(-1.0, -0.5, 16.0);
+      // Fuck it just pass this shit to the tesselation shader.
+#else
     launchProjectile();
+#endif
   }
-  
 }
 
 void key_callback(GLFWwindow *win, int key, int scancode, int action, int mods){
@@ -104,7 +140,7 @@ void key_callback(GLFWwindow *win, int key, int scancode, int action, int mods){
   // Play/pause
   if (key == GLFW_KEY_P){
     if (playing == false){
-      glfwSetInputMode(gWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+      //glfwSetInputMode(gWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
       playing = true;
     }
     else {
@@ -214,9 +250,8 @@ void display(){
         break;
       }
     }
-    targets[i]->draw(view, projection);
+    targets[i]->draw(view, projection, touchPoint);
   }
-  
   
 }
 
@@ -240,6 +275,8 @@ void createTargets(){
   t->loadTraj(traj, 0.2);
   targets.push_back(t);
   
+#ifdef DEBUG_TESS
+#else
   // Go in a fast square
   glm::vec3 p21(-2.0, 0.5, -12.0);
   glm::vec3 p22(2.0, 0.5, -12.0);
@@ -254,6 +291,7 @@ void createTargets(){
   t = new target(tshader, targetObjFile, targetTexFile);
   t->loadTraj(traj, 0.8);
   targets.push_back(t);
+#endif
   
 }
 

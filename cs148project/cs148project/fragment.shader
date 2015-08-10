@@ -5,7 +5,7 @@
 
 uniform sampler2D tex;
 
-in vec3 vPosition;
+in vec3 vPosition_FS;
 in vec2 texcoord_FS;
 
 out vec4 FragColor;
@@ -26,6 +26,16 @@ uniform vec3 AmbientMaterial;*/
     return d;
 }*/
 
+uniform vec3 touchLocation;
+
+uniform mat4 Model;
+//uniform float test;
+
+float distanceToTouch(vec4 vertexPosition)
+{
+    return (3 - clamp(distance(touchLocation, vertexPosition.xyz), 0, 3));
+}
+
 void main()
 {
     /*vec3 N = normalize(gFacetNormal);
@@ -37,10 +47,14 @@ void main()
     float d2 = min(min(gPatchDistance.x, gPatchDistance.y), gPatchDistance.z);
     color = amplify(d1, 40, -0.5) * amplify(d2, 60, -0.5) * color;*/
 
+    //Calculate distance here from position to touch point and colour accordingly
+    
+    float distToTouch = (distanceToTouch(Model * vec4(vPosition_FS, 1.0)) / 3.0);
+    FragColor = vec4(distToTouch, 0.0, 1.0, 1.0);
     //FragColor = vec4(1.0, 0.0, 1.0, 1.0);
 
   // Use texture
-    FragColor = texture(tex, texcoord_FS);
+    //FragColor = texture(tex, texcoord_FS);
   //FragColor = vec4(0.1, 0.1, texture(tex, texcoord_FS).z, 1.0);
   
   // Debug Texture

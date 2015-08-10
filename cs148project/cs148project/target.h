@@ -23,7 +23,7 @@
 class target : public movingObjectBase {
 public:
   target(SimpleShaderProgram *projShader, std::string objName, std::string texName = "");
-  void draw(glm::mat4 viewMat, glm::mat4 projMat);
+  void draw(glm::mat4 viewMat, glm::mat4 projMat, glm::vec3 touchPoint);
   void loadTraj(std::vector<glm::vec3> &traj, float trajSpeed);
   virtual float getRadius();
   

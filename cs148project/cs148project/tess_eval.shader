@@ -1,11 +1,11 @@
 #version 410 core
 
 layout(triangles, equal_spacing, ccw) in;
-//in vec3 tcPosition[];
+in vec3 tePosition[];
 
 in vec2 texcoord_ES[];
 out vec2 texcoord_GS;
-out vec3 vPosition;
+out vec3 vPosition_GS;
 
 uniform mat4 Projection;
 uniform mat4 Modelview;
@@ -43,8 +43,7 @@ void main()
     + gl_TessCoord.z * gl_in[2].gl_Position;
     
     gl_Position = Projection * Modelview * pos;
-    vPosition = gl_Position.xyz;
-    
+    vPosition_GS = pos.xyz;
     texcoord_GS = interpolate2D(texcoord_ES[0], texcoord_ES[1], texcoord_ES[2]);
     //texcoord_GS = vec2(1.1, 1.1);
     //texcoord_FS = vec2(1.0, 1.0);

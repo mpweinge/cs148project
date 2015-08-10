@@ -43,9 +43,9 @@ public:
   ~objMesh();
   // Distance from 0,0,0 to farthest point
   float radius = 0.0;
+  float *vertices;
   
 private:
-  float *vertices;
   float *normals;
   float *textureCoords;
   

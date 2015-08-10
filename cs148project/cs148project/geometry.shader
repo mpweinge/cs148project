@@ -8,6 +8,8 @@ layout(triangle_strip, max_vertices = 3) out;
 
 in vec2 texcoord_GS[3];
 out vec2 texcoord_FS;
+in vec3 vPosition_GS[3];
+out vec3 vPosition_FS;
 /*in vec3 tePosition[3];
 in vec3 tePatchDistance[3];
 out vec3 gFacetNormal;
@@ -22,16 +24,19 @@ void main()
 
     //gPatchDistance = tePatchDistance[0];
     //gTriDistance = vec3(1, 0, 0);
+    vPosition_FS = vPosition_GS[0];
     texcoord_FS = texcoord_GS[0];
     gl_Position = gl_in[0].gl_Position; EmitVertex();
 
     //gPatchDistance = tePatchDistance[1];
     //gTriDistance = vec3(0, 1, 0);
+    vPosition_FS = vPosition_GS[1];
     texcoord_FS = texcoord_GS[1];
     gl_Position = gl_in[1].gl_Position; EmitVertex();
 
     //gPatchDistance = tePatchDistance[2];
     //gTriDistance = vec3(0, 0, 1);
+    vPosition_FS = vPosition_GS[2];
     texcoord_FS = texcoord_GS[2];
     gl_Position = gl_in[2].gl_Position; EmitVertex();
 
