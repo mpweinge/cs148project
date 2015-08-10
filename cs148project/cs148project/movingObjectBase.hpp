@@ -39,6 +39,9 @@ public:
   glm::mat4 getModelMat() {return modelMat; }
   virtual float getRadius() {return 0.0;}
   
+  void startTimer();
+  float getElapsedTimerTime();
+  
 protected:
   glm::vec3 position;
   glm::vec3 velocity;
@@ -49,8 +52,10 @@ protected:
   
   glm::mat4 modelMat;
   float t_last = -1.0;
+  float t_timer = -1.0;
 
   void updateState();
+  
   void init();
   
   // For collision detection

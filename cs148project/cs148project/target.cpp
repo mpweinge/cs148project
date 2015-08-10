@@ -16,7 +16,6 @@ target::target(SimpleShaderProgram *targShader, std::string objName, std::string
   
   // Set state to 0's
   init();
-  
 }
 
 float target::getRadius() {
@@ -81,6 +80,8 @@ void target::draw(glm::mat4 viewMat, glm::mat4 projMat, glm::vec3 touchPoint){
   tshader->SetUniformMatrix4fv("Modelview", glm::value_ptr(modelView));
   tshader->SetUniformMatrix4fv("Projection", glm::value_ptr(projMat));
   tshader->SetUniform("touchLocation", touchPoint.x, touchPoint.y, touchPoint.z);
+  
+  tshader->SetUniform("timeS", getElapsedTimerTime() / 1e6);
   mesh.drawTesselation();
     
   //When we have tesselation here, we want to call GL_PATCHES instead of GL_TRIANGLES

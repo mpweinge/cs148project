@@ -50,7 +50,7 @@ glm::mat4 view;
 static int winWidth = 600; // px
 static int winHeight = 400;
 static glm::vec2 winCenter(winWidth/2.0, winHeight/2.0);
-static const float nearPlane = 0.1;
+static const float nearPlane = 5.0f;
 
 // Strafe
 static float dx = 0.0;
@@ -95,38 +95,42 @@ void onMouseButton(GLFWwindow *win, int button, int action, int mods){
     std::cout << "Launching projectile " << std::endl;
       
 #ifdef DEBUG_TESS
-      //Here let's log the location of the button press
-      double x, y;
-      glfwGetCursorPos(win, &x, &y);
-      
-      //Translate this xpos and ypos into an x, y, and z position
-      //GLint viewportMatrix[4];
-      
-      //glGetIntegerv(GL_VIEWPORT, viewportMatrix);
-      
-      //y = (float)viewportMatrix[3] - y;
-      
-      GLfloat winZ;
-      
-      glReadPixels(x, y, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ);
-      
-      //winZ = 10;
-      
-      std::cout << "Z: " << winZ << std::endl;
-      
-      glm::vec3 windowCoordinates = glm::vec3(x, y, winZ);
-      glm::vec4 viewport = glm::vec4(0.0f, 0.0f, winWidth, winHeight);
-      glm::vec3 worldCoordinates = glm::unProject(windowCoordinates, view, projection, viewport);
-      
-      float scaleRatio = -10 / worldCoordinates.z;
-      worldCoordinates.x *= scaleRatio;
-      worldCoordinates.y *= scaleRatio;
-      worldCoordinates.z *= scaleRatio;
-      printf("(%f, %f, %f)\n", worldCoordinates.x, worldCoordinates.y, worldCoordinates.z);
-      
-      //Static point in 3d space
-      touchPoint = glm::vec3(-1.0, -0.5, 16.0);
-      // Fuck it just pass this shit to the tesselation shader.
+    //Here let's log the location of the button press
+    double x, y;
+    glfwGetCursorPos(win, &x, &y);
+    
+    //Translate this xpos and ypos into an x, y, and z position
+    //GLint viewportMatrix[4];
+    
+    //glGetIntegerv(GL_VIEWPORT, viewportMatrix);
+    
+    //y = (float)viewportMatrix[3] - y;
+    
+    GLfloat winZ;
+    
+    glReadPixels(x, y, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ);
+    
+    //winZ = 10;
+    
+    std::cout << "Z: " << winZ << std::endl;
+    
+    glm::vec3 windowCoordinates = glm::vec3(x, y, winZ);
+    glm::vec4 viewport = glm::vec4(0.0f, 0.0f, winWidth, winHeight);
+    glm::vec3 worldCoordinates = glm::unProject(windowCoordinates, view, projection, viewport);
+    
+    float scaleRatio = -10 / worldCoordinates.z;
+    worldCoordinates.x *= scaleRatio;
+    worldCoordinates.y *= scaleRatio;
+    worldCoordinates.z *= scaleRatio;
+    printf("(%f, %f, %f)\n", worldCoordinates.x, worldCoordinates.y, worldCoordinates.z);
+    
+    //Static point in 3d space
+    touchPoint = glm::vec3(-1.0, -0.5, 15.5);
+    // Fuck it just pass this shit to the tesselation shader.
+    for (int i = 0; i < targets.size(); i++)
+    {
+      ((movingObjectBase *)targets[i])->startTimer();
+    }
 #else
     launchProjectile();
 #endif
@@ -266,13 +270,13 @@ void createTargets(){
   
   // Glide back and forth along x at fixed depth
   std::vector<glm::vec3> traj;
-  glm::vec3 p11 = glm::vec3(-3.0, 0.0, -15.0);
-  glm::vec3 p12 = glm::vec3(3.0, 0.0, -15.0);
+  glm::vec3 p11 = glm::vec3(0.51, 0.0, -15.0);
+  glm::vec3 p12 = glm::vec3(0.5, 0.0, -15.0);
   traj.push_back(p11);
   traj.push_back(p12);
   traj.push_back(p11); // Loop
   target *t = new target(tshader, targetObjFile, targetTexFile);
-  t->loadTraj(traj, 0.2);
+  t->loadTraj(traj, 0);
   targets.push_back(t);
   
 #ifdef DEBUG_TESS

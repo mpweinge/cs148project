@@ -29,6 +29,23 @@ float getTimeMicroseconds(){
   return elapsed.count();
 }
 
+void movingObjectBase::startTimer() {
+    t_timer = getTimeMicroseconds();
+}
+
+float movingObjectBase::getElapsedTimerTime() {
+    if (t_timer == -1.0f) {
+        // Did not call start timer before getting time
+      
+      return 0.0f;
+      assert(0);
+    } else {
+        float t = getTimeMicroseconds();
+        float dt = t - t_timer;
+        return dt;
+    }
+}
+
 void movingObjectBase::updateState(){
   
   // Get t (in seconds)
