@@ -217,7 +217,7 @@ void display(){
     return;
   }
   
-  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+  //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     
   // Set matrix based on view
   resetModel();

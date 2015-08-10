@@ -49,12 +49,12 @@ void main()
 
     //Calculate distance here from position to touch point and colour accordingly
     
-    float distToTouch = (distanceToTouch(Model * vec4(vPosition_FS, 1.0)) / 3.0);
-    FragColor = vec4(distToTouch, 0.0, 1.0, 1.0);
+    //float distToTouch = (distanceToTouch(Model * vec4(vPosition_FS, 1.0)) / 3.0);
+    //FragColor = vec4(distToTouch, 0.0, 1.0, 1.0);
     //FragColor = vec4(1.0, 0.0, 1.0, 1.0);
 
   // Use texture
-    //FragColor = texture(tex, texcoord_FS);
+    FragColor = texture(tex, texcoord_FS);
   //FragColor = vec4(0.1, 0.1, texture(tex, texcoord_FS).z, 1.0);
   
   // Debug Texture
