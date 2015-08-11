@@ -31,6 +31,7 @@ float getTimeMicroseconds(){
 
 void movingObjectBase::startTimer() {
     t_timer = getTimeMicroseconds();
+    timerStarted = true;
 }
 
 float movingObjectBase::getElapsedTimerTime() {
@@ -68,15 +69,10 @@ void movingObjectBase::updateState(){
   omega += dt * alpha;
   
   // Update the modelview matrix (not sure about the euler matrix)
-  modelMat = glm::translate(-position) * glm::yawPitchRoll(eulerAngles.y, eulerAngles.x, eulerAngles.z);
+  modelMat = glm::translate(position) * glm::yawPitchRoll(eulerAngles.y, eulerAngles.x, eulerAngles.z);
   
   // Update last time
   t_last = t;
   
 }
 
-// True if with radii of each other
-bool sphereCollision(movingObjectBase *a, movingObjectBase *b){
-  float cdist = glm::length(a->getPosition() - b->getPosition());
-  return cdist < (a->getRadius() + b->getRadius());
-}

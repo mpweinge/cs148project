@@ -16,6 +16,7 @@
 		CF253D491B755553005E6DA9 /* movingObjectBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CF253D481B755553005E6DA9 /* movingObjectBase.cpp */; };
 		CF253D4C1B755A5B005E6DA9 /* projectile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CF253D4A1B755A5B005E6DA9 /* projectile.cpp */; };
 		CF253D501B75BC52005E6DA9 /* target.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CF253D4E1B75BC52005E6DA9 /* target.cpp */; };
+		CFE580781B7961570004DAA3 /* collisionCheck.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CFE580761B7961570004DAA3 /* collisionCheck.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -61,9 +62,11 @@
 		CF253D4B1B755A5B005E6DA9 /* projectile.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = projectile.hpp; sourceTree = "<group>"; };
 		CF253D4D1B7563F9005E6DA9 /* cylinder.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cylinder.obj; sourceTree = "<group>"; };
 		CF253D4E1B75BC52005E6DA9 /* target.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = target.cpp; sourceTree = "<group>"; };
-		CF253D4F1B75BC52005E6DA9 /* target.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = target.h; sourceTree = "<group>"; };
+		CF253D4F1B75BC52005E6DA9 /* target.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = target.hpp; sourceTree = "<group>"; };
 		CF404C541B6EC6820019FF06 /* main_joe.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main_joe.cpp; sourceTree = "<group>"; };
 		CF404C5B1B7005BB0019FF06 /* constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = constants.h; sourceTree = "<group>"; };
+		CFE580761B7961570004DAA3 /* collisionCheck.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = collisionCheck.cpp; sourceTree = "<group>"; };
+		CFE580771B7961570004DAA3 /* collisionCheck.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = collisionCheck.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,7 +172,9 @@
 				CF253D4A1B755A5B005E6DA9 /* projectile.cpp */,
 				CF253D4B1B755A5B005E6DA9 /* projectile.hpp */,
 				CF253D4E1B75BC52005E6DA9 /* target.cpp */,
-				CF253D4F1B75BC52005E6DA9 /* target.h */,
+				CF253D4F1B75BC52005E6DA9 /* target.hpp */,
+				CFE580761B7961570004DAA3 /* collisionCheck.cpp */,
+				CFE580771B7961570004DAA3 /* collisionCheck.hpp */,
 			);
 			name = movingObject;
 			sourceTree = "<group>";
@@ -235,6 +240,7 @@
 				CF253D361B742772005E6DA9 /* SimpleImage.cpp in Sources */,
 				CF253D421B74A03E005E6DA9 /* objMesh.cpp in Sources */,
 				CF253D501B75BC52005E6DA9 /* target.cpp in Sources */,
+				CFE580781B7961570004DAA3 /* collisionCheck.cpp in Sources */,
 				CF253D4C1B755A5B005E6DA9 /* projectile.cpp in Sources */,
 				CF253D491B755553005E6DA9 /* movingObjectBase.cpp in Sources */,
 			);

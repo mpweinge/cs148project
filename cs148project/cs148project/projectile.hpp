@@ -21,6 +21,10 @@ public:
   projectile(SimpleShaderProgram *projShader, std::string objName, std::string texName = "");
   void draw(glm::mat4 viewMat, glm::mat4 projMat);
   virtual float getRadius();
+  // Idealize projectile as line segment (in object frame)
+  glm::vec4 collisionSegmentA;
+  glm::vec4 collisionSegmentB;
+  
   
 private:
   objMesh mesh;

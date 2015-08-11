@@ -18,7 +18,11 @@ projectile::projectile(SimpleShaderProgram *projShader, std::string objName, std
   init();
   
   // Set gravity
-  setAcceleration(0.05f * (glm::vec3(0.0, 9.81, 0.0)));
+  setAcceleration(0.05f * (glm::vec3(0.0, -9.81, 0.0)));
+  
+  // For cylinder.obj
+  collisionSegmentA = glm::vec4(0.0, 0.0, 0.7, 1.0);
+  collisionSegmentB = glm::vec4(0.0, 0.0, -0.5, 1.0);
 }
 
 float projectile::getRadius() {
@@ -35,7 +39,8 @@ void projectile::draw(glm::mat4 viewMat, glm::mat4 projMat){
   }
   
   updateState();
-    
+  
+ 
 #ifdef DEBUG_TESS
   std::cout << "X: " << position.x << "Y: " << position.y <<"Z: " << position.z << std::endl;
 #endif

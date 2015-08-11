@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Michael Weingert. All rights reserved.
 //
 
-#include "target.h"
+#include "target.hpp"
 
 target::target(SimpleShaderProgram *targShader, std::string objName, std::string texName){
   tshader = targShader;
@@ -16,7 +16,10 @@ target::target(SimpleShaderProgram *targShader, std::string objName, std::string
   
   // Set state to 0's
   init();
+
 }
+
+
 
 float target::getRadius() {
   return mesh.radius;
@@ -56,9 +59,13 @@ void target::updateVelocity(){
     setVelocity(speed * glm::normalize(b - a));
   }
   
+  // For cube.obj
+  collisionCorner1 = glm::vec4(-0.5, -0.5, 1.0, 1.0);
+  collisionCorner2 = glm::vec4( 0.5,  0.5, 1.0, 1.0);
+  
 }
 
-void target::draw(glm::mat4 viewMat, glm::mat4 projMat, glm::vec3 touchPoint){
+void target::draw(glm::mat4 viewMat, glm::mat4 projMat){
   
   updateVelocity();
   updateState();
@@ -69,17 +76,19 @@ void target::draw(glm::mat4 viewMat, glm::mat4 projMat, glm::vec3 touchPoint){
     glm::mat4 model = getModelMat();
     
     glm::vec4 projVec = model * glm::vec4(mesh.vertices[0], mesh.vertices[1], mesh.vertices[2], 1.0);
-    
+  
 #ifdef DEBUG_TESS
     std::cout << "PROJ X: " << projVec.x << " Y: " << projVec.y << " Z: " << projVec.z << std::endl;
-    std::cout << "TOUCH X: " << touchPoint.x << " Y: " << touchPoint.y << " Z: " << touchPoint.z << std::endl;
-    std::cout << "Distance: " << glm::distance(projVec, glm::vec4(touchPoint, 1.0)) << std::endl;
+    std::cout << "TOUCH X: " << collisionLocation.x << " Y: " << collisionLocation.y << " Z: " << collisionLocation.z << std::endl;
+    std::cout << "Distance: " << glm::distance(projVec, glm::vec4(collisionLocation, 1.0)) << std::endl;
 #endif
-    
+  
   tshader->SetUniformMatrix4fv("Model", glm::value_ptr(model));
   tshader->SetUniformMatrix4fv("Modelview", glm::value_ptr(modelView));
   tshader->SetUniformMatrix4fv("Projection", glm::value_ptr(projMat));
-  tshader->SetUniform("touchLocation", touchPoint.x, touchPoint.y, touchPoint.z);
+  // The -0.5 is to get the point of impact in the middle of the cube
+  glm::vec3 explodeLocation = collisionLocation + explodeOffset;
+  tshader->SetUniform("touchLocation", explodeLocation.x, explodeLocation.y, explodeLocation.z);
   
   tshader->SetUniform("timeS", getElapsedTimerTime() / 1e6);
   mesh.drawTesselation();

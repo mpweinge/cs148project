@@ -20,6 +20,7 @@
 #include <ctgmath>
 #include "glm/glm/gtx/quaternion.hpp"
 #include "glm/glm/gtx/euler_angles.hpp"
+#include "glm/glm/gtx/intersect.hpp"
 
 #include <chrono>
 #include <iostream>
@@ -38,9 +39,11 @@ public:
   glm::vec3 getPosition() {return position; }
   glm::mat4 getModelMat() {return modelMat; }
   virtual float getRadius() {return 0.0;}
+  glm::mat4x4 modelMat;
   
   void startTimer();
   float getElapsedTimerTime();
+  bool timerStarted = false;
   
 protected:
   glm::vec3 position;
@@ -50,7 +53,6 @@ protected:
   glm::vec3 omega;
   glm::vec3 alpha;
   
-  glm::mat4 modelMat;
   float t_last = -1.0;
   float t_timer = -1.0;
 
@@ -60,11 +62,7 @@ protected:
   
   // For collision detection
   float radius = 0;
-  void calculateBoxLimits();
-  glm::vec2 boxLimits[3];
   
 };
 
-// True if with radii of each other
-bool sphereCollision(movingObjectBase *a, movingObjectBase *b);
 #endif

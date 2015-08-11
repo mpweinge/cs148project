@@ -20,12 +20,20 @@
 #include "movingObjectBase.hpp"
 #include "objMesh.hpp"
 
+
+
 class target : public movingObjectBase {
 public:
   target(SimpleShaderProgram *projShader, std::string objName, std::string texName = "");
-  void draw(glm::mat4 viewMat, glm::mat4 projMat, glm::vec3 touchPoint);
+  void draw(glm::mat4 viewMat, glm::mat4 projMat);
   void loadTraj(std::vector<glm::vec3> &traj, float trajSpeed);
   virtual float getRadius();
+  // For collision checking, just idealize as a rectangular face
+  // which is defined by opposite corners (object coordinates)
+  glm::vec4 collisionCorner1;
+  glm::vec4 collisionCorner2;
+  glm::vec3 collisionLocation;
+  glm::vec3 explodeOffset = glm::vec3(0.0, 0.0, 0.5);
   
 private:
   objMesh mesh;

@@ -236,9 +236,11 @@ bool objMesh::parseFile(std::string fname){
           textureCoords[tex_counter] = f->text[vert][d];
           tex_counter++;
         }
+#ifdef DEBUG_TESS
         std::cout << "NORMAL x: " << normals[array_counter - 3] << " Y: ";
         std::cout << normals[array_counter - 2] << " Z: ";
         std::cout << normals[array_counter - 1] << std::endl;
+#endif
       }
       // Update radius
       if (normSquared > radius)

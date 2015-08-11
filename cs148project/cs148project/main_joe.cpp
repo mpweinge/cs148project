@@ -36,8 +36,9 @@
 #include "SimpleShaderProgram.h"
 #include "objMesh.hpp"
 #include "projectile.hpp"
-#include "target.h"
+#include "target.hpp"
 #include "constants.h"
+#include "collisionCheck.hpp"
 
 // Window management
 GLFWwindow* gWindow = NULL;
@@ -47,10 +48,10 @@ static bool playing = false;
 SimpleShaderProgram *gpShader;
 glm::mat4 projection;
 glm::mat4 view;
-static int winWidth = 600; // px
-static int winHeight = 400;
+static int winWidth = 900; // px
+static int winHeight = 600;
 static glm::vec2 winCenter(winWidth/2.0, winHeight/2.0);
-static const float nearPlane = 5.0f;
+static const float nearPlane = 0.01f;
 
 // Strafe
 static float dx = 0.0;
@@ -72,6 +73,11 @@ void launchProjectile(); // prototpye
 SimpleShaderProgram *pshader, *tshader; // Shader for projectiles and targets
 
 glm::vec3 touchPoint = glm::vec3(0, 0, 0);
+
+// Debug tools
+inline void printVec3(std::string n, glm::vec3 v){
+  std::cout << n << ": " << v[0] << ", " << v[1] << ", " << v[2] << std::endl;
+}
 
 /******************* GLFW Callbacks ********************/
 inline double abs(double x){ return x < 0 ? -x : x; };
@@ -95,41 +101,42 @@ void onMouseButton(GLFWwindow *win, int button, int action, int mods){
     std::cout << "Launching projectile " << std::endl;
       
 #ifdef DEBUG_TESS
-    //Here let's log the location of the button press
-    double x, y;
-    glfwGetCursorPos(win, &x, &y);
-    
-    //Translate this xpos and ypos into an x, y, and z position
-    //GLint viewportMatrix[4];
-    
-    //glGetIntegerv(GL_VIEWPORT, viewportMatrix);
-    
-    //y = (float)viewportMatrix[3] - y;
-    
-    GLfloat winZ;
-    
-    glReadPixels(x, y, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ);
-    
-    //winZ = 10;
-    
-    std::cout << "Z: " << winZ << std::endl;
-    
-    glm::vec3 windowCoordinates = glm::vec3(x, y, winZ);
-    glm::vec4 viewport = glm::vec4(0.0f, 0.0f, winWidth, winHeight);
-    glm::vec3 worldCoordinates = glm::unProject(windowCoordinates, view, projection, viewport);
-    
-    float scaleRatio = -10 / worldCoordinates.z;
-    worldCoordinates.x *= scaleRatio;
-    worldCoordinates.y *= scaleRatio;
-    worldCoordinates.z *= scaleRatio;
-    printf("(%f, %f, %f)\n", worldCoordinates.x, worldCoordinates.y, worldCoordinates.z);
-    
+//    //Here let's log the location of the button press
+//    double x, y;
+//    glfwGetCursorPos(win, &x, &y);
+//    
+//    //Translate this xpos and ypos into an x, y, and z position
+//    //GLint viewportMatrix[4];
+//    
+//    //glGetIntegerv(GL_VIEWPORT, viewportMatrix);
+//    
+//    //y = (float)viewportMatrix[3] - y;
+//    
+//    GLfloat winZ;
+//    
+//    glReadPixels(x, y, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ);
+//    
+//    //winZ = 10;
+//    
+//    std::cout << "Z: " << winZ << std::endl;
+//    
+//    glm::vec3 windowCoordinates = glm::vec3(x, y, winZ);
+//    glm::vec4 viewport = glm::vec4(0.0f, 0.0f, winWidth, winHeight);
+//    glm::vec3 worldCoordinates = glm::unProject(windowCoordinates, view, projection, viewport);
+//    
+//    float scaleRatio = -10 / worldCoordinates.z;
+//    worldCoordinates.x *= scaleRatio;
+//    worldCoordinates.y *= scaleRatio;
+//    worldCoordinates.z *= scaleRatio;
+//    printf("(%f, %f, %f)\n", worldCoordinates.x, worldCoordinates.y, worldCoordinates.z);
+//    
     //Static point in 3d space
     touchPoint = glm::vec3(-1.0, -0.5, 15.5);
     // Fuck it just pass this shit to the tesselation shader.
     for (int i = 0; i < targets.size(); i++)
     {
       ((movingObjectBase *)targets[i])->startTimer();
+      targets[i]->collisionLocation = touchPoint;
     }
 #else
     launchProjectile();
@@ -144,7 +151,7 @@ void key_callback(GLFWwindow *win, int key, int scancode, int action, int mods){
   // Play/pause
   if (key == GLFW_KEY_P){
     if (playing == false){
-      //glfwSetInputMode(gWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+      glfwSetInputMode(gWindow, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
       playing = true;
     }
     else {
@@ -175,11 +182,11 @@ void launchProjectile(){
   projectile *p = new projectile(pshader, projectileObjFile, projectileTexFile);
   // Position
   glm::mat4 viewInv = glm::inverse(view);
-  glm::vec4 initPos = viewInv * glm::vec4(dx, 0.0, 1.0, 0.0);
+  glm::vec4 initPos = viewInv * glm::vec4(dx, 0.0, -1.0, 0.0);
   p->setPosition(glm::vec3(initPos[0], initPos[1], initPos[2]));
   p->setOrientationEuler(glm::vec3(orientation[1]* degToRad, -orientation[0]* degToRad, 0.0));
   // Velocity
-  glm::vec4 vel = viewInv * glm::vec4(0.0, 0.0, 5.0, 0.0);
+  glm::vec4 vel = viewInv * glm::vec4(0.0, 0.0, -15.0, 0.0);
   p->setVelocity(glm::vec3(vel[0], vel[1], vel[2]));
   projectiles.push_back(p);
 }
@@ -194,7 +201,7 @@ inline void rotateModel(float ang, glm::vec3 axis){
 
 inline void resetModel(){
   view = glm::lookAt(glm::vec3(0.0, 0.0, 0.0),
-                          glm::vec3(0.0, 0.0, 1.0),
+                          glm::vec3(0.0, 0.0, -1.0),
                           glm::vec3(0.0, -1.0, 0.0));
 }
 
@@ -217,12 +224,12 @@ void display(){
     return;
   }
   
-  //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    
+//  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+  
   // Set matrix based on view
   resetModel();
   
-  rotateModel(-orientation[1], glm::vec3(1.0, 0.0, 0.0));
+  rotateModel(orientation[1], glm::vec3(1.0, 0.0, 0.0));
   rotateModel(orientation[0], glm::vec3(0.0, 1.0, 0.0));
   translateModel(-dx, 0.0, 0.0);
   
@@ -236,27 +243,38 @@ void display(){
   for (size_t i = 0; i < projectiles.size(); i++){
     // If below ground, delete
     glm::vec3 pos = projectiles[i]->getPosition();
-    if (-pos[1] < groundLevel){
+    if (pos[1] < groundLevel){
       delete projectiles[i];
       std::cout << "Deleting projectile\n";
       projectiles.erase(projectiles.begin() + i);
+      break; // TODO: Delpete projectiles correctly
     }
     // Otherwise, draw
     projectiles[i]->draw(view, projection);
   }
   
+  // Debug collisions
+//  if (!projectiles.empty()){
+//    printVec3("Target: ", targets[0]->getPosition());
+//    printVec3("Projectile", projectiles[0]->getPosition());
+//  }
+  
   // Targets
   for (size_t i = 0; i < targets.size(); i++){
+    glm::vec3 intersectionPoint;
     // Check if it has collided with a projectile
-    for (size_t j = 0; j < projectiles.size(); j++){
-      if (sphereCollision(targets[i], projectiles[j])){
-        targets.erase(targets.begin() + i);
-        break;
+    for (size_t j = 0; j < projectiles.size(); j++){      
+      if (checkCollision(projectiles[j], targets[i], intersectionPoint)){
+        std::cout << "Intersection detected.\n";
+        if (!targets[i]->timerStarted){
+          // Tell target to explode
+          targets[i]->collisionLocation = intersectionPoint;
+          targets[i]->startTimer();
+        }
       }
     }
-    targets[i]->draw(view, projection, touchPoint);
+    targets[i]->draw(view, projection);
   }
-  
 }
 
 /**************** Initialization Functions *************/
@@ -270,13 +288,13 @@ void createTargets(){
   
   // Glide back and forth along x at fixed depth
   std::vector<glm::vec3> traj;
-  glm::vec3 p11 = glm::vec3(0.51, 0.0, -15.0);
-  glm::vec3 p12 = glm::vec3(0.5, 0.0, -15.0);
+  glm::vec3 p11 = glm::vec3(1.51, 0.0, -15.0);
+  glm::vec3 p12 = glm::vec3(1.5, 0.0, -15.0);
   traj.push_back(p11);
   traj.push_back(p12);
   traj.push_back(p11); // Loop
   target *t = new target(tshader, targetObjFile, targetTexFile);
-  t->loadTraj(traj, 0);
+  t->loadTraj(traj, 0.0);
   targets.push_back(t);
   
 #ifdef DEBUG_TESS
@@ -284,8 +302,8 @@ void createTargets(){
   // Go in a fast square
   glm::vec3 p21(-2.0, 0.5, -12.0);
   glm::vec3 p22(2.0, 0.5, -12.0);
-  glm::vec3 p23(2.0, -3.5, -12.0);
-  glm::vec3 p24(-2.0, -3.5, -12.0);
+  glm::vec3 p23(2.0, 3.5, -12.0);
+  glm::vec3 p24(-2.0, 3.5, -12.0);
   traj.clear();
   traj.push_back(p21);
   traj.push_back(p22);
