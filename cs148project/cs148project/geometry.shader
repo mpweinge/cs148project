@@ -44,40 +44,40 @@ void main()
     //vec3 B = tePosition[1] - tePosition[0];
     //gFacetNormal = NormalMatrix * normalize(cross(A, B));
   
-  //We receive 3 coordinates with tess coordinates tessValue_GS[0], 1, 2...
-  //We want to treat this as a face and move them all in some way
-  
-  float averageTouchDist = (touchDist_GS[0] + touchDist_GS[1] + touchDist_GS[2]) / 3.0;
-  vec3 averageTess = averageVectorValue(tessValue_GS[0], tessValue_GS[1], tessValue_GS[2]);
-  vec3 averageNormal = averageVectorValue(Normal_GS[0], Normal_GS[1], Normal_GS[2]);
-  vec3 averageTouchV = averageVectorValue(touchVector_GS[0], touchVector_GS[1], touchVector_GS[2]);
-  
-  float randNum1 = rand(averageTess.xy);
-  float randNum2 = rand(averageTess.xz);
-  float randNum3 = rand(averageTess.yz);
-  
-  averageTouchV.x += randNum1 / 2.0;
-  averageTouchV.y += randNum2 / 2.0;
-  averageTouchV.z += randNum3 / 2.0;
-  
-  if ((averageNormal.x == 0.0) && (averageNormal.y == 0.0) && (averageNormal.z == 0.0) )
-  {
-    averageNormal.z = 1.0;
-  }
-  averageNormal.z = 0.02;
+    //We receive 3 coordinates with tess coordinates tessValue_GS[0], 1, 2...
+    //We want to treat this as a face and move them all in some way
+    
+    float averageTouchDist = (touchDist_GS[0] + touchDist_GS[1] + touchDist_GS[2]) / 3.0;
+    vec3 averageTess = averageVectorValue(tessValue_GS[0], tessValue_GS[1], tessValue_GS[2]);
+    vec3 averageNormal = averageVectorValue(Normal_GS[0], Normal_GS[1], Normal_GS[2]);
+    vec3 averageTouchV = averageVectorValue(touchVector_GS[0], touchVector_GS[1], touchVector_GS[2]);
+    
+    float randNum1 = rand(averageTess.xy);
+    float randNum2 = rand(averageTess.xz);
+    float randNum3 = rand(averageTess.yz);
+    
+    averageTouchV.x += randNum1 / 3.0;
+    averageTouchV.y += randNum2 / 3.0;
+    averageTouchV.z += randNum3 / 3.0;
+    
+    if ((averageNormal.x == 0.0) && (averageNormal.y == 0.0) && (averageNormal.z == 0.0) )
+    {
+      averageNormal.z = 1.0;
+    }
+    averageNormal.z = 0.02;
 
     //gPatchDistance = tePatchDistance[0];
     //gTriDistance = vec3(1, 0, 0);
     vPosition_FS = vPosition_GS[0];
     texcoord_FS = texcoord_GS[0];
-  
-  vec4 offset = vec4(0.0, 0.0, 0.0, 1.0);
-  //if (averageTouchDist < (timeS))
-  {
-     offset = vec4(averageTouchV * timeS * pow(averageTouchDist, 3) + averageTess.x + averageTess.y + averageTess.z, 1.0) / 10.0;
     
-    //offset = - vec4(0, 0, 0.1, 1.0) * timeS;
-  }
+    vec4 offset = vec4(0.0, 0.0, 1.0, 0.0);
+    //if (averageTouchDist < (timeS))
+    {
+       offset = vec4(-averageTouchV * timeS * pow(averageTouchDist, 3) + averageTess.x + averageTess.y + averageTess.z, 1.0) / 10.0;
+      
+      //offset = - vec4(0, 0, 0.1, 1.0) * timeS;
+    }
   
   //offset = - vec4(0, 0, 0.1, 1.0) * timeS;
   

@@ -66,7 +66,6 @@ void target::updateVelocity(){
 }
 
 void target::draw(glm::mat4 viewMat, glm::mat4 projMat){
-  
   updateVelocity();
   updateState();
     

@@ -352,7 +352,7 @@ void glSetup() {
   
   // Rendering params
   glClearColor(0, 0.0, 0.0, 1);
-  glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   glPatchParameteri(GL_PATCH_VERTICES, 3);
   glEnable(GL_DEPTH_TEST);
   
