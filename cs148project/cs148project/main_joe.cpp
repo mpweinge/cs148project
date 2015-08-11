@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <string>
+#include <time.h>
 
 // Window and user input
 #include <OpenGL/gl3.h>
@@ -168,6 +169,17 @@ void key_callback(GLFWwindow *win, int key, int scancode, int action, int mods){
     dx += xstep;
   else if (key == GLFW_KEY_Q)
     glfwSetWindowShouldClose(gWindow, 1);
+  // Screenshot
+  else if (key == GLFW_KEY_S){
+    time_t dateTime;
+    time(&dateTime);
+    struct tm * tInfo;
+    tInfo = localtime(&dateTime);
+    char buffer[50];
+    strftime(buffer, 50, "Screenshot %F %T", tInfo);
+    std::string fname(buffer);
+    screenshot(fname);
+  }
 }
 
 void window_resize_callback(GLFWwindow *w, int x, int y){

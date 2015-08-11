@@ -3,10 +3,15 @@
 #include <cstdlib>
 #include <stdexcept>
 
+#include <OpenGL/gl3.h>
+#include <GLFW/glfw3.h>
+
 #include "stb_image.h"
 #include "stb_image_write.h"
 
 using std::string;
+
+extern GLFWwindow* gWindow;
 
 SimpleImage::SimpleImage() :
   _width(0),
@@ -127,6 +132,26 @@ bool SimpleImage::save(const string& filename) {
     return false;
   }
   return true;
+}
+
+// Provided by CS 148 teachin staff
+void screenshot(std::string output_name){
+  int w, h;
+  glfwGetWindowSize(gWindow, &w, &h);
+  float out[3 * w * h];
+  RGBColor BG(0,0,0);
+  SimpleImage shot(w, h, BG);
+  glReadPixels(0, 0, w, h, GL_RGB, GL_FLOAT, &out[0]);
+  for (int y = 0; y < h; ++y){
+    for(int x = 0; x < w; ++x){
+      int index = (3 * w * y) + 3*x;
+      float red = out[index];
+      float green = out[index + 1];
+      float blue = out[index + 2];
+      shot.set(x,h-y,RGBColor(red, green, blue));
+    }
+  }
+  shot.save(output_name);
 }
 
 

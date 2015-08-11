@@ -106,5 +106,6 @@ class SimpleImage {
   bool inBounds(int x, int y) const { return x >= 0 && x < _width && y >= 0 && y < _height; }
 };
 
+void screenshot(std::string output_name);
 
 #endif  // _SIMPLEIMAGE_H_
