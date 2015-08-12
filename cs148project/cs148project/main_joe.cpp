@@ -215,12 +215,13 @@ void launchProjectile(){
   projectile *p = new projectile(pshader, projectileObjFile, projectileTexFile);
   // Position
   glm::mat4 viewInv = glm::inverse(view);
-  glm::vec4 initPos = viewInv * glm::vec4(dx, 0.0, -1.0, 0.0);
+  glm::vec4 initPos = viewInv * glm::vec4(dx, 0.0, -1.0, 0.0) + glm::vec4(0, -0.2, 0, 0);
   p->setPosition(glm::vec3(initPos[0], initPos[1], initPos[2]));
   p->setOrientationEuler(glm::vec3(orientation[1]* degToRad, -orientation[0]* degToRad, 0.0));
   // Velocity
-  glm::vec4 vel = viewInv * glm::vec4(0.0, 0.0, -15.0, 0.0);
+  glm::vec4 vel = viewInv * glm::vec4(0.0, 0.0, -7.0, 0.0);
   p->setVelocity(glm::vec3(vel[0], vel[1], vel[2]));
+  p->setOrientationEuler(glm::vec3(0, M_PI, 0));
   projectiles.push_back(p);
 }
 

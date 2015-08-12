@@ -59,9 +59,9 @@ void target::updateVelocity(){
     setVelocity(speed * glm::normalize(b - a));
   }
   
-  // For cube.obj
-  collisionCorner1 = glm::vec4(-0.5, -0.5, 1.0, 1.0);
-  collisionCorner2 = glm::vec4( 0.5,  0.5, 1.0, 1.0);
+  // For wooden target
+  collisionCorner1 = glm::vec4(0.0, 0.0, 0.0, 1.0);
+  collisionCorner2 = glm::vec4(1.0, 0.5, 0.0, 1.0);
   
 }
 

@@ -71,6 +71,8 @@
 		CFE580761B7961570004DAA3 /* collisionCheck.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = collisionCheck.cpp; sourceTree = "<group>"; };
 		CFE580771B7961570004DAA3 /* collisionCheck.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = collisionCheck.hpp; sourceTree = "<group>"; };
 		CFE580791B79E9400004DAA3 /* skybox.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = skybox.obj; sourceTree = "<group>"; };
+		CFFFDD3E1B7C0319004AEE00 /* arrow.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = arrow.obj; sourceTree = "<group>"; };
+		CFFFDD3F1B7C0457004AEE00 /* targetSign.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = targetSign.obj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +154,8 @@
 		CF253D3D1B742837005E6DA9 /* meshes */ = {
 			isa = PBXGroup;
 			children = (
+				CFFFDD3F1B7C0457004AEE00 /* targetSign.obj */,
+				CFFFDD3E1B7C0319004AEE00 /* arrow.obj */,
 				CF253D4D1B7563F9005E6DA9 /* cylinder.obj */,
 				A61F0E131B6D77FE001989CB /* cube.obj */,
 				CF253D441B7546CF005E6DA9 /* groundPlane.obj */,
