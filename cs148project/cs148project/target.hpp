@@ -35,6 +35,9 @@ public:
   glm::vec3 collisionLocation;
   glm::vec3 explodeOffset = glm::vec3(0.0, 0.0, 0.5);
   
+  bool deleteMe = false;
+  const float postCollisionLife = 2e6; // microseconds
+  
 private:
   objMesh mesh;
   SimpleShaderProgram *tshader;

@@ -29,7 +29,9 @@ const std::string geometryShaderPath = "../../cs148project/geometry.shader";
 
 // Objects and textures
 const std::string groundObjFile = "../../cs148project/groundPlane.obj";
-const std::string groundTexFile = "../../cs148project/square_stones.png";
+const std::string groundTexFile = "../../cs148project/crackedGround.png";
+const std::string skyObjFile = "../../cs148project/skybox.obj";
+const std::string skyTexFile = "../../cs148project/sky2.png";
 const std::string projectileObjFile = "../../cs148project/cylinder.obj";
 const std::string projectileTexFile = "../../cs148project/blue.png";
 const std::string targetObjFile = "../../cs148project/cube.obj";

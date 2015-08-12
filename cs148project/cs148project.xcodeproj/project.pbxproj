@@ -65,8 +65,12 @@
 		CF253D4F1B75BC52005E6DA9 /* target.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = target.hpp; sourceTree = "<group>"; };
 		CF404C541B6EC6820019FF06 /* main_joe.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main_joe.cpp; sourceTree = "<group>"; };
 		CF404C5B1B7005BB0019FF06 /* constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = constants.h; sourceTree = "<group>"; };
+		CFA31D5B1B7AB74200B02991 /* sky.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sky.png; sourceTree = "<group>"; };
+		CFA31D5C1B7ABA4900B02991 /* sky2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sky2.png; sourceTree = "<group>"; };
+		CFA31D5D1B7ABD6B00B02991 /* crackedGround.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = crackedGround.png; sourceTree = "<group>"; };
 		CFE580761B7961570004DAA3 /* collisionCheck.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = collisionCheck.cpp; sourceTree = "<group>"; };
 		CFE580771B7961570004DAA3 /* collisionCheck.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = collisionCheck.hpp; sourceTree = "<group>"; };
+		CFE580791B79E9400004DAA3 /* skybox.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = skybox.obj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,6 +155,7 @@
 				CF253D4D1B7563F9005E6DA9 /* cylinder.obj */,
 				A61F0E131B6D77FE001989CB /* cube.obj */,
 				CF253D441B7546CF005E6DA9 /* groundPlane.obj */,
+				CFE580791B79E9400004DAA3 /* skybox.obj */,
 			);
 			name = meshes;
 			sourceTree = "<group>";
@@ -158,6 +163,9 @@
 		CF253D3E1B742BF7005E6DA9 /* textures */ = {
 			isa = PBXGroup;
 			children = (
+				CFA31D5D1B7ABD6B00B02991 /* crackedGround.png */,
+				CFA31D5C1B7ABA4900B02991 /* sky2.png */,
+				CFA31D5B1B7AB74200B02991 /* sky.png */,
 				CF253D451B754A73005E6DA9 /* square_stones.png */,
 				CF253D3F1B742CAD005E6DA9 /* blue.png */,
 			);

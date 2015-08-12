@@ -53,6 +53,7 @@ static int winWidth = 900; // px
 static int winHeight = 600;
 static glm::vec2 winCenter(winWidth/2.0, winHeight/2.0);
 static const float nearPlane = 0.01f;
+static const float farPlane = 300.0f;
 
 // Strafe
 static float dx = 0.0;
@@ -62,12 +63,17 @@ static const float xstep = 0.02;
 // Rotate
 static glm::vec2 orientation(0.0, 0.0); // yaw, pitch (deg)
 static const float pixelToDeg = 0.1;
-static glm::vec2 mouseLimits(10.0 / pixelToDeg, 7.0 / pixelToDeg); // x, y
+bool limitOrientation = true;
+static glm::vec2 mouseLimits(20.0 / pixelToDeg, 11.0 / pixelToDeg); // x, y
 static const float degToRad = M_PI / 180.0;
+
+// Zoom
+double zoom = 1.0;
+static const float zoomMax = 2.0;
 
 // Objects for rendering objects
 float groundLevel = -1.0;
-objMesh groundPlane;
+objMesh groundPlane, skyBox;
 std::vector<projectile*> projectiles;
 std::vector<target*> targets;
 void launchProjectile(); // prototpye
@@ -89,7 +95,11 @@ void cursor_position_callback(GLFWwindow *win, double x, double y){
   // Distance from center
   glm::vec2 mousePos = glm::vec2(x, y) - winCenter;
   // Clamp
-  glm::vec2 mousePosClamp = glm::clamp(mousePos, -mouseLimits, mouseLimits);
+  glm::vec2 mousePosClamp;
+  if (limitOrientation)
+    mousePosClamp = glm::clamp(mousePos, -mouseLimits, mouseLimits);
+  else
+    mousePosClamp = mousePos;
   // Make sure cursor doesn't get carried away
   if (mousePos != mousePosClamp) {
     glfwSetCursorPos(gWindow, mousePosClamp[0] + winCenter[0], mousePosClamp[1] + winCenter[1]);
@@ -97,10 +107,21 @@ void cursor_position_callback(GLFWwindow *win, double x, double y){
     orientation = pixelToDeg * mousePos;
  }
 
+inline float clamp(float x, float xmin, float xmax){
+  x = x < xmin ? xmin : x;
+  x = x > xmax ? xmax : x;
+  return x;
+}
+
+void scrollCallback(GLFWwindow* w, double x, double y){
+  float scrollToZoom = 0.1;
+  zoom = clamp(zoom - y * scrollToZoom, 1.0, zoomMax);
+}
+
 void onMouseButton(GLFWwindow *win, int button, int action, int mods){
   if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS && playing){
-    std::cout << "Launching projectile " << std::endl;
-      
+//    std::cout << "Launching projectile " << std::endl;
+    
 #ifdef DEBUG_TESS
 //    //Here let's log the location of the button press
 //    double x, y;
@@ -214,12 +235,12 @@ inline void rotateModel(float ang, glm::vec3 axis){
 inline void resetModel(){
   view = glm::lookAt(glm::vec3(0.0, 0.0, 0.0),
                           glm::vec3(0.0, 0.0, -1.0),
-                          glm::vec3(0.0, -1.0, 0.0));
+                          glm::vec3(0.0, 1.0, 0.0));
 }
 
-void setProjection(double zoom){
-  float fovy = 50.0 / zoom;
-  projection = glm::perspective(fovy, 1.5f, nearPlane, 100.0f);
+void setProjection(){
+  float fovy = 50.0f / zoom;
+  projection = glm::perspective(fovy * degToRad, 1.5f, nearPlane, farPlane);
 }
 
 // Be sure to bind before calling this
@@ -239,6 +260,7 @@ void display(){
 //  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   
   // Set matrix based on view
+  setProjection();
   resetModel();
   
   rotateModel(orientation[1], glm::vec3(1.0, 0.0, 0.0));
@@ -249,45 +271,49 @@ void display(){
   gpShader->Bind();
   updateUniformMatrices();
   groundPlane.draw();
+  skyBox.draw();
   gpShader->UnBind();
   
-  // Projectiles
-  for (size_t i = 0; i < projectiles.size(); i++){
+  // Projectiles--draw or delete if below ground
+  std::vector<projectile*>::iterator pit = projectiles.begin();
+  while (pit != projectiles.end()){
     // If below ground, delete
-    glm::vec3 pos = projectiles[i]->getPosition();
+    glm::vec3 pos = (*pit)->getPosition();
     if (pos[1] < groundLevel){
-      delete projectiles[i];
-      std::cout << "Deleting projectile\n";
-      projectiles.erase(projectiles.begin() + i);
-      break; // TODO: Delpete projectiles correctly
+      delete *pit;
+      pit = projectiles.erase(pit);
     }
-    // Otherwise, draw
-    projectiles[i]->draw(view, projection);
+    else{
+      // Otherwise, draw
+      (*pit)->draw(view, projection);
+      pit++;
+    }
   }
   
-  // Debug collisions
-//  if (!projectiles.empty()){
-//    printVec3("Target: ", targets[0]->getPosition());
-//    printVec3("Projectile", projectiles[0]->getPosition());
-//  }
   
   // Targets
-  for (size_t i = 0; i < targets.size(); i++){
+  std::vector<target*>::iterator tit = targets.begin();
+  while(tit != targets.end()){
+    // Check if target has declared that it should be removed
+    if ((*tit)->deleteMe){
+      delete *tit;
+      tit = targets.erase(tit);
+      continue;
+    }
+    // Check for collisions
     glm::vec3 intersectionPoint;
-    // Check if it has collided with a projectile
-    for (size_t j = 0; j < projectiles.size(); j++){      
-      if (checkCollision(projectiles[j], targets[i], intersectionPoint)){
-        std::cout << "Intersection detected.\n";
-        if (!targets[i]->timerStarted){
-          // Tell target to explode
-          targets[i]->collisionLocation = intersectionPoint;
-          targets[i]->startTimer();
-        }
+    for (pit = projectiles.begin(); pit != projectiles.end(); pit++){
+      if (checkCollision(*pit, *tit, intersectionPoint)){
+        // Tell target to explode and stop moving
+        (*tit)->collisionLocation = intersectionPoint;
+        (*tit)->startTimer();
+        (*tit)->setVelocity(glm::vec3(0.0));
       }
     }
-    targets[i]->draw(view, projection);
+    (*tit)->draw(view, projection);
+    tit++;
   }
-}
+  }
 
 /**************** Initialization Functions *************/
 
@@ -338,6 +364,7 @@ void glSetup() {
   //gpShader->LoadTesselationShaders(tessControlShaderPath, tessEvalShaderPath, geometryShaderPath);
   
   groundPlane.init(groundObjFile, gpShader->programid, groundTexFile);
+  skyBox.init(skyObjFile, gpShader->programid, skyTexFile);
   
   // Projectile
   pshader = new SimpleShaderProgram();
@@ -348,11 +375,11 @@ void glSetup() {
 
 
   // Initial view
-  setProjection(1.0);
+  setProjection();
   
   // Rendering params
   glClearColor(0, 0.0, 0.0, 1);
-  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+//  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   glPatchParameteri(GL_PATCH_VERTICES, 3);
   glEnable(GL_DEPTH_TEST);
   
@@ -391,6 +418,7 @@ void glfwSetup(){
   glfwSetMouseButtonCallback(gWindow, onMouseButton);
   glfwSetKeyCallback(gWindow, key_callback);
   glfwSetFramebufferSizeCallback(gWindow, window_resize_callback);
+  glfwSetScrollCallback(gWindow, scrollCallback);
   
 }
 

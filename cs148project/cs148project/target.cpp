@@ -91,6 +91,10 @@ void target::draw(glm::mat4 viewMat, glm::mat4 projMat){
   
   tshader->SetUniform("timeS", getElapsedTimerTime() / 1e6);
   mesh.drawTesselation();
+  
+  // Check if it's been long enough since the explosion
+  if (getElapsedTimerTime() > postCollisionLife)
+    deleteMe = true;
     
   //When we have tesselation here, we want to call GL_PATCHES instead of GL_TRIANGLES
   tshader->UnBind();
