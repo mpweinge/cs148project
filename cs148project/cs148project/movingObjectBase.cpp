@@ -30,8 +30,10 @@ float getTimeMicroseconds(){
 }
 
 void movingObjectBase::startTimer() {
+  if (!timerStarted) {
     t_timer = getTimeMicroseconds();
     timerStarted = true;
+  }
 }
 
 float movingObjectBase::getElapsedTimerTime() {
