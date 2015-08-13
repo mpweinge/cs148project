@@ -36,6 +36,9 @@ const std::string projectileObjFile = "../../cs148project/arrowFlip.obj";
 const std::string projectileTexFile = "../../cs148project/darkWoodTexture.png";
 const std::string targetObjFile = "../../cs148project/targetSign.obj";
 const std::string targetTexFile = "../../cs148project/lightWoodTexture.png";
+const std::string targetLaundTexFile = "../../cs148project/lightWoodTexture_LAUNDRY.png";
+const std::string targetCatTexFile = "../../cs148project/lightWoodTexture_CAT.png";
+const std::string targetReportTexFile = "../../cs148project/lightWoodTexture_REPORT.png";
 const std::string reticuleObjFile= "../../cs148project/reticule.obj";
 const std::string reticuleTexFile = "../../cs148project/reticuleGreen.png";
 #endif

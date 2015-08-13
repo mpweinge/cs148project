@@ -318,7 +318,7 @@ void createTargets(){
   traj.push_back(p11);
   traj.push_back(p12);
   traj.push_back(p11); // Loop
-  target *t = new target(tshader, targetObjFile, targetTexFile);
+  target *t = new target(tshader, targetObjFile, targetCatTexFile);
   t->loadTraj(traj, 0.5);
   targets.push_back(t);
   
@@ -328,7 +328,7 @@ void createTargets(){
   traj.push_back(p12);
   traj.push_back(p11);
   traj.push_back(p12);
-  t = new target(tshader, targetObjFile, targetTexFile);
+  t = new target(tshader, targetObjFile, targetLaundTexFile);
   t->loadTraj(traj, 1.5);
   targets.push_back(t);
   
@@ -338,7 +338,7 @@ void createTargets(){
   traj.push_back(p12);
   traj.push_back(p11);
   traj.push_back(p12);
-  t = new target(tshader, targetObjFile, targetTexFile);
+  t = new target(tshader, targetObjFile, targetReportTexFile);
   t->loadTraj(traj, 0.2);
   targets.push_back(t);
 
