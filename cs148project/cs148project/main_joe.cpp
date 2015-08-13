@@ -57,7 +57,7 @@ static const float farPlane = 300.0f;
 
 // Strafe
 static float dx = 0.0;
-static const float xmax = 1.0;
+static const float xmax = 0.0;
 static const float xstep = 0.02;
 
 // Rotate
@@ -397,7 +397,7 @@ void glfwSetup(){
   glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
   
   // Create window
-  gWindow = glfwCreateWindow(winWidth, winHeight, "Task Shooting", NULL, NULL);
+  gWindow = glfwCreateWindow(winWidth, winHeight, "Task Shooting: P = play/pause -- Q = quit", NULL, NULL);
   if(!gWindow)
     throw std::runtime_error("glfwCreateWindow failed. Can your hardware handle OpenGL 3.2?");
   glfwMakeContextCurrent(gWindow);
