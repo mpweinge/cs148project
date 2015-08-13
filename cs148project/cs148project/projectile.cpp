@@ -22,7 +22,7 @@ projectile::projectile(SimpleShaderProgram *projShader, std::string objName, std
   
   // For cylinder.obj
   collisionSegmentA = glm::vec4(0.0, 0.0, 0.7, 1.0);
-  collisionSegmentB = glm::vec4(0.0, 0.0, -0.5, 1.0);
+  collisionSegmentB = glm::vec4(0.0, 0.0, -0.1, 1.0);
 }
 
 float projectile::getRadius() {

@@ -60,8 +60,8 @@ void target::updateVelocity(){
   }
   
   // For wooden target
-  collisionCorner1 = glm::vec4(0.0, 0.0, 0.0, 1.0);
-  collisionCorner2 = glm::vec4(1.0, 0.5, 0.0, 1.0);
+  collisionCorner1 = glm::vec4(0.0, 0.00, 0.05, 1.0);
+  collisionCorner2 = glm::vec4(1.0, 0.5, 0.05, 1.0);
   
 }
 

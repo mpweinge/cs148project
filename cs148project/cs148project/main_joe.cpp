@@ -64,7 +64,7 @@ static const float xstep = 0.02;
 static glm::vec2 orientation(0.0, 0.0); // yaw, pitch (deg)
 static const float pixelToDeg = 0.1;
 bool limitOrientation = true;
-static glm::vec2 mouseLimits(20.0 / pixelToDeg, 11.0 / pixelToDeg); // x, y
+static glm::vec2 mouseLimits(20.0 / pixelToDeg, 15.0 / pixelToDeg); // x, y
 static const float degToRad = M_PI / 180.0;
 
 // Zoom
@@ -73,7 +73,7 @@ static const float zoomMax = 2.0;
 
 // Objects for rendering objects
 float groundLevel = -1.0;
-objMesh groundPlane, skyBox;
+objMesh groundPlane, skyBox, reticule;
 std::vector<projectile*> projectiles;
 std::vector<target*> targets;
 void launchProjectile(); // prototpye
@@ -327,32 +327,35 @@ void createTargets(){
   
   // Glide back and forth along x at fixed depth
   std::vector<glm::vec3> traj;
-  glm::vec3 p11 = glm::vec3(1.51, 0.0, -15.0);
-  glm::vec3 p12 = glm::vec3(1.5, 0.0, -15.0);
+  glm::vec3 p11 = glm::vec3(-1.5, 0.0, -5.0);
+  glm::vec3 p12 = glm::vec3(1.5, 0.0, -5.0);
   traj.push_back(p11);
   traj.push_back(p12);
   traj.push_back(p11); // Loop
   target *t = new target(tshader, targetObjFile, targetTexFile);
-  t->loadTraj(traj, 0.0);
+  t->loadTraj(traj, 0.5);
   targets.push_back(t);
   
-#ifdef DEBUG_TESS
-#else
-  // Go in a fast square
-  glm::vec3 p21(-2.0, 0.5, -12.0);
-  glm::vec3 p22(2.0, 0.5, -12.0);
-  glm::vec3 p23(2.0, 3.5, -12.0);
-  glm::vec3 p24(-2.0, 3.5, -12.0);
   traj.clear();
-  traj.push_back(p21);
-  traj.push_back(p22);
-  traj.push_back(p23);
-  traj.push_back(p24);
-  traj.push_back(p21);
+  p11 = glm::vec3(-1.5, 1.0, -5.0);
+  p12 = glm::vec3(1.5, 1.0, -5.0);
+  traj.push_back(p12);
+  traj.push_back(p11);
+  traj.push_back(p12);
   t = new target(tshader, targetObjFile, targetTexFile);
-  t->loadTraj(traj, 0.8);
+  t->loadTraj(traj, 1.5);
   targets.push_back(t);
-#endif
+  
+  traj.clear();
+  p11 = glm::vec3(-1.5, 0.0, -9.0);
+  p12 = glm::vec3(1.5, 0.0, -9.0);
+  traj.push_back(p12);
+  traj.push_back(p11);
+  traj.push_back(p12);
+  t = new target(tshader, targetObjFile, targetTexFile);
+  t->loadTraj(traj, 0.2);
+  targets.push_back(t);
+
   
 }
 
@@ -364,8 +367,11 @@ void glSetup() {
   gpShader->LoadFragmentShader(fragmentShaderPath);
   //gpShader->LoadTesselationShaders(tessControlShaderPath, tessEvalShaderPath, geometryShaderPath);
   
+  // Environment
   groundPlane.init(groundObjFile, gpShader->programid, groundTexFile);
   skyBox.init(skyObjFile, gpShader->programid, skyTexFile);
+//  reticule.init(reticuleObjFile, gp->shader->programid, reticleTexFile);
+  
   
   // Projectile
   pshader = new SimpleShaderProgram();

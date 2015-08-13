@@ -65,6 +65,9 @@
 		CF253D4F1B75BC52005E6DA9 /* target.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = target.hpp; sourceTree = "<group>"; };
 		CF404C541B6EC6820019FF06 /* main_joe.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main_joe.cpp; sourceTree = "<group>"; };
 		CF404C5B1B7005BB0019FF06 /* constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = constants.h; sourceTree = "<group>"; };
+		CF6CA2831B7C198C00AAA70F /* arrowFlip.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = arrowFlip.obj; sourceTree = "<group>"; };
+		CF6CA2841B7C1B4300AAA70F /* darkWoodTexture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = darkWoodTexture.png; sourceTree = "<group>"; };
+		CF6CA2861B7C1BE000AAA70F /* lightWoodTexture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lightWoodTexture.png; sourceTree = "<group>"; };
 		CFA31D5B1B7AB74200B02991 /* sky.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sky.png; sourceTree = "<group>"; };
 		CFA31D5C1B7ABA4900B02991 /* sky2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sky2.png; sourceTree = "<group>"; };
 		CFA31D5D1B7ABD6B00B02991 /* crackedGround.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = crackedGround.png; sourceTree = "<group>"; };
@@ -154,6 +157,7 @@
 		CF253D3D1B742837005E6DA9 /* meshes */ = {
 			isa = PBXGroup;
 			children = (
+				CF6CA2831B7C198C00AAA70F /* arrowFlip.obj */,
 				CFFFDD3F1B7C0457004AEE00 /* targetSign.obj */,
 				CFFFDD3E1B7C0319004AEE00 /* arrow.obj */,
 				CF253D4D1B7563F9005E6DA9 /* cylinder.obj */,
@@ -167,6 +171,8 @@
 		CF253D3E1B742BF7005E6DA9 /* textures */ = {
 			isa = PBXGroup;
 			children = (
+				CF6CA2861B7C1BE000AAA70F /* lightWoodTexture.png */,
+				CF6CA2841B7C1B4300AAA70F /* darkWoodTexture.png */,
 				CFA31D5D1B7ABD6B00B02991 /* crackedGround.png */,
 				CFA31D5C1B7ABA4900B02991 /* sky2.png */,
 				CFA31D5B1B7AB74200B02991 /* sky.png */,
