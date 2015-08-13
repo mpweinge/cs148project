@@ -215,7 +215,7 @@ void launchProjectile(){
   projectile *p = new projectile(pshader, projectileObjFile, projectileTexFile);
   // Position
   glm::mat4 viewInv = glm::inverse(view);
-  glm::vec4 initPos = viewInv * glm::vec4(dx, 0.0, -1.0, 0.0) + glm::vec4(0, -0.2, 0, 0);
+  glm::vec4 initPos = viewInv * glm::vec4(dx, 0.0, -1.0, 0.0) + glm::vec4(0, -0.0, 0, 0);
   p->setPosition(glm::vec3(initPos[0], initPos[1], initPos[2]));
   p->setOrientationEuler(glm::vec3(orientation[1]* degToRad, -orientation[0]* degToRad, 0.0));
   // Velocity
@@ -263,6 +263,11 @@ void display(){
   // Set matrix based on view
   setProjection();
   resetModel();
+  
+  gpShader->Bind();
+  updateUniformMatrices();
+  reticule.draw();
+  gpShader->UnBind();
   
   rotateModel(orientation[1], glm::vec3(1.0, 0.0, 0.0));
   rotateModel(orientation[0], glm::vec3(0.0, 1.0, 0.0));
@@ -370,7 +375,7 @@ void glSetup() {
   // Environment
   groundPlane.init(groundObjFile, gpShader->programid, groundTexFile);
   skyBox.init(skyObjFile, gpShader->programid, skyTexFile);
-//  reticule.init(reticuleObjFile, gp->shader->programid, reticleTexFile);
+  reticule.init(reticuleObjFile, gpShader->programid, reticuleTexFile);
   
   
   // Projectile
