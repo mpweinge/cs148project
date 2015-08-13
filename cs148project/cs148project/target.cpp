@@ -89,7 +89,7 @@ void target::draw(glm::mat4 viewMat, glm::mat4 projMat){
   glm::vec3 explodeLocation = collisionLocation + explodeOffset;
   tshader->SetUniform("touchLocation", explodeLocation.x, explodeLocation.y, explodeLocation.z);
   
-  tshader->SetUniform("timeS", getElapsedTimerTime() / 1e6);
+  tshader->SetUniform("timeS", (float)getElapsedTimerTime() / (float)1e6);
   mesh.drawTesselation();
   
   // Check if it's been long enough since the explosion

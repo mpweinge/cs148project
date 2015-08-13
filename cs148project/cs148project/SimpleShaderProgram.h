@@ -165,6 +165,16 @@ public:
       glUniform2fARB(location, v0, v1);
     }
   }
+  void SetUniform(const std::string& name, int status) {
+    GLint location = GetUniformLocation(name);
+    if (location == -1) return;
+    if(GLEW_VERSION_2_0) {
+      glUniform1i(location, status);
+    }
+    else {
+      glUniform1iARB(location, status);
+    }
+  }
   void SetUniform(const std::string& name, float v0, float v1, float v2) {
     GLint location = GetUniformLocation(name);
     if (location == -1) return;

@@ -27,6 +27,7 @@ uniform vec3 AmbientMaterial;*/
 }*/
 
 uniform vec3 touchLocation;
+uniform int treatGreenAsTransparent;
 
 uniform mat4 Model;
 //uniform float test;
@@ -55,15 +56,17 @@ void main()
 
   // Use texture
     FragColor = texture(tex, texcoord_FS);
+
+    // Since alpha channel is not included, overload green channel in some cases
+    if (treatGreenAsTransparent == 1){
+      FragColor.a = 1.0 - FragColor.g;
+      FragColor.g = 0.0;
+    }
+  
   //FragColor = vec4(0.1, 0.1, texture(tex, texcoord_FS).z, 1.0);
   
   // Debug Texture
-  /*vec4 a = vec4(1.0, 1.0, 1.0, 1.0);
-  vec4 b = vec4(1.0, 0.0, 0.0, 1.0);
-    
-//  
-  if (texcoord_FS.x > 1)
-    FragColor = a;
-  else
-    FragColor = b;*/
+//  if (FragColor.a == 0.0)
+//    FragColor = vec4(0.0, 1.0, 0.0, 1.0);
+
 }

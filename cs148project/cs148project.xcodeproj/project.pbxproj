@@ -70,6 +70,7 @@
 		CF6CA2861B7C1BE000AAA70F /* lightWoodTexture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lightWoodTexture.png; sourceTree = "<group>"; };
 		CF6CA2871B7C1F1000AAA70F /* reticule.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reticule.png; sourceTree = "<group>"; };
 		CF6CA2881B7C1F1C00AAA70F /* reticule.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = reticule.obj; sourceTree = "<group>"; };
+		CF6CA2891B7C514500AAA70F /* reticuleGreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reticuleGreen.png; sourceTree = "<group>"; };
 		CFA31D5B1B7AB74200B02991 /* sky.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sky.png; sourceTree = "<group>"; };
 		CFA31D5C1B7ABA4900B02991 /* sky2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sky2.png; sourceTree = "<group>"; };
 		CFA31D5D1B7ABD6B00B02991 /* crackedGround.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = crackedGround.png; sourceTree = "<group>"; };
@@ -174,6 +175,7 @@
 		CF253D3E1B742BF7005E6DA9 /* textures */ = {
 			isa = PBXGroup;
 			children = (
+				CF6CA2891B7C514500AAA70F /* reticuleGreen.png */,
 				CF6CA2871B7C1F1000AAA70F /* reticule.png */,
 				CF6CA2861B7C1BE000AAA70F /* lightWoodTexture.png */,
 				CF6CA2841B7C1B4300AAA70F /* darkWoodTexture.png */,

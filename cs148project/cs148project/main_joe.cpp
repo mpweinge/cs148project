@@ -46,7 +46,7 @@ GLFWwindow* gWindow = NULL;
 static bool playing = false;
 
 // Displaying
-SimpleShaderProgram *gpShader;
+SimpleShaderProgram *envShader;
 glm::mat4 projection;
 glm::mat4 view;
 static int winWidth = 900; // px
@@ -105,6 +105,8 @@ void cursor_position_callback(GLFWwindow *win, double x, double y){
     glfwSetCursorPos(gWindow, mousePosClamp[0] + winCenter[0], mousePosClamp[1] + winCenter[1]);
   }
     orientation = pixelToDeg * mousePos;
+
+  
  }
 
 inline float clamp(float x, float xmin, float xmax){
@@ -120,49 +122,7 @@ void scrollCallback(GLFWwindow* w, double x, double y){
 
 void onMouseButton(GLFWwindow *win, int button, int action, int mods){
   if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS && playing){
-//    std::cout << "Launching projectile " << std::endl;
-    
-#ifdef DEBUG_TESS
-//    //Here let's log the location of the button press
-//    double x, y;
-//    glfwGetCursorPos(win, &x, &y);
-//    
-//    //Translate this xpos and ypos into an x, y, and z position
-//    //GLint viewportMatrix[4];
-//    
-//    //glGetIntegerv(GL_VIEWPORT, viewportMatrix);
-//    
-//    //y = (float)viewportMatrix[3] - y;
-//    
-//    GLfloat winZ;
-//    
-//    glReadPixels(x, y, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &winZ);
-//    
-//    //winZ = 10;
-//    
-//    std::cout << "Z: " << winZ << std::endl;
-//    
-//    glm::vec3 windowCoordinates = glm::vec3(x, y, winZ);
-//    glm::vec4 viewport = glm::vec4(0.0f, 0.0f, winWidth, winHeight);
-//    glm::vec3 worldCoordinates = glm::unProject(windowCoordinates, view, projection, viewport);
-//    
-//    float scaleRatio = -10 / worldCoordinates.z;
-//    worldCoordinates.x *= scaleRatio;
-//    worldCoordinates.y *= scaleRatio;
-//    worldCoordinates.z *= scaleRatio;
-//    printf("(%f, %f, %f)\n", worldCoordinates.x, worldCoordinates.y, worldCoordinates.z);
-//    
-    //Static point in 3d space
-    touchPoint = glm::vec3(-1.0, -0.5, 15.5);
-    // Fuck it just pass this shit to the tesselation shader.
-    for (int i = 0; i < targets.size(); i++)
-    {
-      ((movingObjectBase *)targets[i])->startTimer();
-      targets[i]->collisionLocation = touchPoint;
-    }
-#else
     launchProjectile();
-#endif
   }
 }
 
@@ -246,9 +206,18 @@ void setProjection(){
 
 // Be sure to bind before calling this
 void updateUniformMatrices(){
-  gpShader->SetUniformMatrix4fv("Modelview", glm::value_ptr(view));
-  gpShader->SetUniformMatrix4fv("Projection", glm::value_ptr(projection));
+  envShader->SetUniformMatrix4fv("Modelview", glm::value_ptr(view));
+  envShader->SetUniformMatrix4fv("Projection", glm::value_ptr(projection));
 }
+
+// This is a bit of a hack, but the SimpleImage class doesn't support alpha
+// channel. To get around this, we'll overload a different rgb channel as
+// the transparency, and then set it to zero. In this case, we're using green
+// as alpha. As a result, all green in image is zero-ed in fragment shader.
+void setGreenAsAlpha(SimpleShaderProgram *s, bool status){
+  s->SetUniform("treatGreenAsTransparent", status ? 1 : 0);
+}
+
 
 void display(){
   
@@ -258,27 +227,23 @@ void display(){
     return;
   }
   
-//  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-  
-  // Set matrix based on view
+  // Update zoom
   setProjection();
+  
+  // Reset view matrix
   resetModel();
-  
-  gpShader->Bind();
-  updateUniformMatrices();
-  reticule.draw();
-  gpShader->UnBind();
-  
+
+  // Update view matrix for world based on rotation
   rotateModel(orientation[1], glm::vec3(1.0, 0.0, 0.0));
   rotateModel(orientation[0], glm::vec3(0.0, 1.0, 0.0));
   translateModel(-dx, 0.0, 0.0);
   
-  // Drawing
-  gpShader->Bind();
+  // Draw ground and sky
+  envShader->Bind();
   updateUniformMatrices();
   groundPlane.draw();
   skyBox.draw();
-  gpShader->UnBind();
+  envShader->UnBind();
   
   // Projectiles--draw or delete if below ground
   std::vector<projectile*>::iterator pit = projectiles.begin();
@@ -295,7 +260,6 @@ void display(){
       pit++;
     }
   }
-  
   
   // Targets
   std::vector<target*>::iterator tit = targets.begin();
@@ -319,6 +283,23 @@ void display(){
     (*tit)->draw(view, projection);
     tit++;
   }
+  
+  
+  // Need to draw reticule last since it has transparency. Also,
+  // we want view to be identity for it:
+  glm::mat4 bufferView = view;
+  resetModel();
+  
+  envShader->Bind();
+  updateUniformMatrices();
+  // We're using green as alpha--see not above setGreenAsAlpha
+  setGreenAsAlpha(envShader, true);
+  reticule.draw();
+  setGreenAsAlpha(envShader, false);
+  envShader->UnBind();
+  
+  // Restore view for when launch is called.
+  view = bufferView;
   }
 
 /**************** Initialization Functions *************/
@@ -367,15 +348,15 @@ void createTargets(){
 void glSetup() {
   
   // Ground plane
-  gpShader = new SimpleShaderProgram();
-  gpShader->LoadVertexShader(vertexShaderPath);
-  gpShader->LoadFragmentShader(fragmentShaderPath);
-  //gpShader->LoadTesselationShaders(tessControlShaderPath, tessEvalShaderPath, geometryShaderPath);
+  envShader = new SimpleShaderProgram();
+  envShader->LoadVertexShader(vertexShaderPath);
+  envShader->LoadFragmentShader(fragmentShaderPath);
+  //envShader->LoadTesselationShaders(tessControlShaderPath, tessEvalShaderPath, geometryShaderPath);
   
   // Environment
-  groundPlane.init(groundObjFile, gpShader->programid, groundTexFile);
-  skyBox.init(skyObjFile, gpShader->programid, skyTexFile);
-  reticule.init(reticuleObjFile, gpShader->programid, reticuleTexFile);
+  groundPlane.init(groundObjFile, envShader->programid, groundTexFile);
+  skyBox.init(skyObjFile, envShader->programid, skyTexFile);
+  reticule.init(reticuleObjFile, envShader->programid, reticuleTexFile);
   
   
   // Projectile
@@ -388,12 +369,17 @@ void glSetup() {
 
   // Initial view
   setProjection();
+  resetModel();
   
   // Rendering params
   glClearColor(0, 0.0, 0.0, 1);
 //  glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
   glPatchParameteri(GL_PATCH_VERTICES, 3);
   glEnable(GL_DEPTH_TEST);
+  
+  glEnable (GL_BLEND);
+  glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
   
   glEnableClientState(GL_VERTEX_ARRAY);
 
@@ -438,7 +424,7 @@ int main(int argc,  char * argv[]) {
   // Set up window
   glfwSetup();
   
-  // Initialize GL (gpShaders, lights, vertices, etc.)
+  // Initialize GL (envShaders, lights, vertices, etc.)
   glSetup();
   
   // glfw loop
