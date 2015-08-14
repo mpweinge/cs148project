@@ -386,7 +386,7 @@ void glfwSetup(){
   glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
   
   // Create window
-  gWindow = glfwCreateWindow(winWidth, winHeight, "Task Shooting: P = play/pause -- Q = quit", NULL, NULL);
+  gWindow = glfwCreateWindow(winWidth, winHeight, "Do-It Shoot-It: P = play/pause -- Q = quit", NULL, NULL);
   if(!gWindow)
     throw std::runtime_error("glfwCreateWindow failed. Can your hardware handle OpenGL 3.2?");
   glfwMakeContextCurrent(gWindow);
