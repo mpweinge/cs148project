@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		A61F0E101B6D6891001989CB /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A61F0E0F1B6D6891001989CB /* OpenGL.framework */; };
 		A61F0E261B6EB43E001989CB /* libglfw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A61F0E251B6EB43E001989CB /* libglfw3.a */; };
-		A6C1AFB51B71D76500F9EDAD /* main_joe.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CF404C541B6EC6820019FF06 /* main_joe.cpp */; };
+		A6C1AFB51B71D76500F9EDAD /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CF404C541B6EC6820019FF06 /* main.cpp */; };
 		CF253D361B742772005E6DA9 /* SimpleImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CF253D351B742772005E6DA9 /* SimpleImage.cpp */; };
 		CF253D3A1B7427AA005E6DA9 /* stb.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CF253D391B7427AA005E6DA9 /* stb.cpp */; };
 		CF253D421B74A03E005E6DA9 /* objMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CF253D411B74A03E005E6DA9 /* objMesh.cpp */; };
@@ -33,7 +33,6 @@
 
 /* Begin PBXFileReference section */
 		A61F0E011B6D6691001989CB /* cs148project */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = cs148project; sourceTree = BUILT_PRODUCTS_DIR; };
-		A61F0E041B6D6691001989CB /* main_mike.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main_mike.cpp; sourceTree = "<group>"; };
 		A61F0E0F1B6D6891001989CB /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		A61F0E121B6D6AEF001989CB /* SimpleShaderProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleShaderProgram.h; sourceTree = "<group>"; };
 		A61F0E131B6D77FE001989CB /* cube.obj */ = {isa = PBXFileReference; lastKnownFileType = text; path = cube.obj; sourceTree = "<group>"; };
@@ -50,12 +49,10 @@
 		CF253D371B7427AA005E6DA9 /* stb_image_write.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stb_image_write.h; sourceTree = "<group>"; };
 		CF253D381B7427AA005E6DA9 /* stb_image.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
 		CF253D391B7427AA005E6DA9 /* stb.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stb.cpp; sourceTree = "<group>"; };
-		CF253D3F1B742CAD005E6DA9 /* blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blue.png; sourceTree = "<group>"; };
 		CF253D401B74A03E005E6DA9 /* objMesh.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = objMesh.hpp; sourceTree = "<group>"; };
 		CF253D411B74A03E005E6DA9 /* objMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = objMesh.cpp; sourceTree = "<group>"; };
 		CF253D431B74A0C9005E6DA9 /* DataStructs.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DataStructs.hpp; sourceTree = "<group>"; };
 		CF253D441B7546CF005E6DA9 /* groundPlane.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = groundPlane.obj; sourceTree = "<group>"; };
-		CF253D451B754A73005E6DA9 /* square_stones.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = square_stones.png; sourceTree = "<group>"; };
 		CF253D471B75526D005E6DA9 /* movingObjectBase.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = movingObjectBase.hpp; sourceTree = "<group>"; };
 		CF253D481B755553005E6DA9 /* movingObjectBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = movingObjectBase.cpp; sourceTree = "<group>"; };
 		CF253D4A1B755A5B005E6DA9 /* projectile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = projectile.cpp; sourceTree = "<group>"; };
@@ -63,7 +60,7 @@
 		CF253D4D1B7563F9005E6DA9 /* cylinder.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cylinder.obj; sourceTree = "<group>"; };
 		CF253D4E1B75BC52005E6DA9 /* target.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = target.cpp; sourceTree = "<group>"; };
 		CF253D4F1B75BC52005E6DA9 /* target.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = target.hpp; sourceTree = "<group>"; };
-		CF404C541B6EC6820019FF06 /* main_joe.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main_joe.cpp; sourceTree = "<group>"; };
+		CF404C541B6EC6820019FF06 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		CF404C5B1B7005BB0019FF06 /* constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = constants.h; sourceTree = "<group>"; };
 		CF6CA2831B7C198C00AAA70F /* arrowFlip.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = arrowFlip.obj; sourceTree = "<group>"; };
 		CF6CA2841B7C1B4300AAA70F /* darkWoodTexture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = darkWoodTexture.png; sourceTree = "<group>"; };
@@ -71,6 +68,7 @@
 		CF6CA2871B7C1F1000AAA70F /* reticule.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reticule.png; sourceTree = "<group>"; };
 		CF6CA2881B7C1F1C00AAA70F /* reticule.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = reticule.obj; sourceTree = "<group>"; };
 		CF6CA2891B7C514500AAA70F /* reticuleGreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = reticuleGreen.png; sourceTree = "<group>"; };
+		CF6CA28A1B7DB46700AAA70F /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		CFA31D5B1B7AB74200B02991 /* sky.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sky.png; sourceTree = "<group>"; };
 		CFA31D5C1B7ABA4900B02991 /* sky2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sky2.png; sourceTree = "<group>"; };
 		CFA31D5D1B7ABD6B00B02991 /* crackedGround.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = crackedGround.png; sourceTree = "<group>"; };
@@ -121,9 +119,9 @@
 				CF253D3B1B74280A005E6DA9 /* utils */,
 				A61F0E241B6EAA03001989CB /* glm */,
 				CF253D3D1B742837005E6DA9 /* meshes */,
-				A61F0E041B6D6691001989CB /* main_mike.cpp */,
 				CF253D3C1B74281D005E6DA9 /* shaders */,
-				CF404C541B6EC6820019FF06 /* main_joe.cpp */,
+				CF404C541B6EC6820019FF06 /* main.cpp */,
+				CF6CA28A1B7DB46700AAA70F /* README */,
 			);
 			path = cs148project;
 			sourceTree = "<group>";
@@ -182,8 +180,6 @@
 				CFA31D5D1B7ABD6B00B02991 /* crackedGround.png */,
 				CFA31D5C1B7ABA4900B02991 /* sky2.png */,
 				CFA31D5B1B7AB74200B02991 /* sky.png */,
-				CF253D451B754A73005E6DA9 /* square_stones.png */,
-				CF253D3F1B742CAD005E6DA9 /* blue.png */,
 			);
 			name = textures;
 			sourceTree = "<group>";
@@ -259,7 +255,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A6C1AFB51B71D76500F9EDAD /* main_joe.cpp in Sources */,
+				A6C1AFB51B71D76500F9EDAD /* main.cpp in Sources */,
 				CF253D3A1B7427AA005E6DA9 /* stb.cpp in Sources */,
 				CF253D361B742772005E6DA9 /* SimpleImage.cpp in Sources */,
 				CF253D421B74A03E005E6DA9 /* objMesh.cpp in Sources */,

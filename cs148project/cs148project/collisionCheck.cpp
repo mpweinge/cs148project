@@ -14,7 +14,7 @@ bool checkCollision(projectile *p, target *t, glm::vec3 &intersectPoint){
   if (!sphereCollision(p, t)){
     return false;
   }
-  
+
   // Longer check
   return lineFaceCollision(p, t, intersectPoint);
 }

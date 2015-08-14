@@ -16,8 +16,6 @@
 
 #define BUFFER_OFFSET(i) ((char *)NULL + (i))
 
-//#define DEBUG_TESS 1
-
 // Shaders
 const std::string objFilename = "../../cs148project/cube.obj";
 const std::string vertexShaderPath = "../../cs148project/vertex.shader";

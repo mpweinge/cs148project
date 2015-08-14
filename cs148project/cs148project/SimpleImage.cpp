@@ -151,7 +151,7 @@ void screenshot(std::string output_name){
       shot.set(x,h-y,RGBColor(red, green, blue));
     }
   }
-  shot.save(output_name);
+  shot.save(output_name + ".png");
 }
 
 
