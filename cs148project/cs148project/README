@@ -4,7 +4,7 @@ By: Mike Weingert and Joe Polin
 August 14, 2015
 CS 148
 
-This is an interactive to-do list where you can shoot your to-do items when you finish them. Currently, the items are hard-coded (hopefully it matches your personal to-do list). This project was developed in xcode, and will be most easily run by using the xcode project file.
+This is an interactive to-do list where you can shoot your to-do items when you finish them. Currently, the items are hard-coded (hopefully it matches your personal to-do list). This project was developed in xcode, and will be most easily run by using the xcode project file. Simply open up the .xcodeproj file and hit the play > button in the top left corner!
 
 Controls:
 
