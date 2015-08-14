@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A61E87351B7DD252007091BE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A61E87341B7DD252007091BE /* Cocoa.framework */; };
+		A61E87371B7DD257007091BE /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A61E87361B7DD257007091BE /* IOKit.framework */; };
+		A61E87391B7DD25C007091BE /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A61E87381B7DD25C007091BE /* CoreVideo.framework */; };
 		A61F0E101B6D6891001989CB /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A61F0E0F1B6D6891001989CB /* OpenGL.framework */; };
 		A61F0E261B6EB43E001989CB /* libglfw3.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A61F0E251B6EB43E001989CB /* libglfw3.a */; };
 		A6C1AFB51B71D76500F9EDAD /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CF404C541B6EC6820019FF06 /* main.cpp */; };
@@ -32,6 +35,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A61E87331B7DD1A3007091BE /* GLFW */ = {isa = PBXFileReference; lastKnownFileType = folder; path = GLFW; sourceTree = "<group>"; };
+		A61E87341B7DD252007091BE /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		A61E87361B7DD257007091BE /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		A61E87381B7DD25C007091BE /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		A61F0E011B6D6691001989CB /* cs148project */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = cs148project; sourceTree = BUILT_PRODUCTS_DIR; };
 		A61F0E0F1B6D6891001989CB /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		A61F0E121B6D6AEF001989CB /* SimpleShaderProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleShaderProgram.h; sourceTree = "<group>"; };
@@ -84,6 +91,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A61E87391B7DD25C007091BE /* CoreVideo.framework in Frameworks */,
+				A61E87371B7DD257007091BE /* IOKit.framework in Frameworks */,
+				A61E87351B7DD252007091BE /* Cocoa.framework in Frameworks */,
 				A61F0E101B6D6891001989CB /* OpenGL.framework in Frameworks */,
 				A61F0E261B6EB43E001989CB /* libglfw3.a in Frameworks */,
 			);
@@ -95,6 +105,9 @@
 		A61F0DF81B6D6691001989CB = {
 			isa = PBXGroup;
 			children = (
+				A61E87381B7DD25C007091BE /* CoreVideo.framework */,
+				A61E87361B7DD257007091BE /* IOKit.framework */,
+				A61E87341B7DD252007091BE /* Cocoa.framework */,
 				A61F0E251B6EB43E001989CB /* libglfw3.a */,
 				A61F0E0F1B6D6891001989CB /* OpenGL.framework */,
 				A61F0E031B6D6691001989CB /* cs148project */,
@@ -113,6 +126,7 @@
 		A61F0E031B6D6691001989CB /* cs148project */ = {
 			isa = PBXGroup;
 			children = (
+				A61E87331B7DD1A3007091BE /* GLFW */,
 				CF404C5B1B7005BB0019FF06 /* constants.h */,
 				CF253D461B7551AC005E6DA9 /* movingObject */,
 				CF253D3E1B742BF7005E6DA9 /* textures */,

@@ -18,7 +18,7 @@
 
 // Window and user input
 #include <OpenGL/gl3.h>
-#include <GLFW/glfw3.h>
+#include "GLFW/glfw3.h"
 
 // openGL
 //#include <OpenGL/gl.h>
