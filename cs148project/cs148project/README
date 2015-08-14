@@ -6,6 +6,8 @@ CS 148
 
 This is an interactive to-do list where you can shoot your to-do items when you finish them. Currently, the items are hard-coded (hopefully it matches your personal to-do list). This project was developed in xcode, and will be most easily run by using the xcode project file. Simply open up the .xcodeproj file and hit the play > button in the top left corner!
 
+Video: https://www.youtube.com/watch?v=6QNQ9FprJgA
+
 Controls:
 
 Mouse = After switching to play mode, move the mouse around to look around. Left button shoots. Mouse wheel zooms.
