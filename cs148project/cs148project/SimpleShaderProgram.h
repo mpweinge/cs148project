@@ -11,7 +11,7 @@
 //#include <OpenGL/gl.h>
 #include <OpenGL/gl3.h>
 #include <GLFW/glfw3.h>
-#include <GL/gl.h>
+//#include <GL/gl.h>
 #include <OpenGL/glext.h>
 
 #include <GL/glu.h>

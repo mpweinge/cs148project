@@ -1,7 +1,7 @@
 # Free SolidWorks .OBJ Exporter v2.0
 # num_vertices: 428 
 
-mtllib targetSign.mtl
+# mtllib targetSign.mtl
 
 v 0.403112976339954 0 0.0762
 v 0.4 0 0.0762
@@ -1293,8 +1293,8 @@ vt 0 -0.0762
 vt -4.36768623608515E-02 -0.0762
 # 428 UVs
 
-g  mesh 1 targetSign
-usemtl  1 
+# g  mesh 1 targetSign
+# usemtl  1
 f 16/16/16 14/14/14 17/17/17
 f 14/14/14 16/16/16 15/15/15
 f 15/15/15 13/13/13 14/14/14

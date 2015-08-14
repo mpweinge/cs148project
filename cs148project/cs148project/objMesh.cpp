@@ -53,7 +53,7 @@ void objMesh::init(std::string objFile, GLuint shaderProg, std::string texFile){
     // Bind texture
     SimpleImage texImg(texFile);
     
-    std::cout << "Texture #:" << vao << std::endl;
+    //std::cout << "Texture #:" << vao << std::endl;
     glGenTextures(1, &textureIndex);
     glBindTexture(GL_TEXTURE_2D, textureIndex);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
@@ -118,7 +118,7 @@ bool objMesh::parseFile(std::string fname){
     return false;
   }
   else {
-    std::cout << "Opening " << fname << std::endl;
+    //std::cout << "Opening " << fname << std::endl;
   }
   
   // Temporary containers for structs
