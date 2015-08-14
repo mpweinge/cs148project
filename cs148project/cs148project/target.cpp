@@ -41,7 +41,6 @@ void target::loadTraj(std::vector<glm::vec3> &traj, float trajSpeed){
     desVel = glm::vec3(0.0f);
   setVelocity(desVel);
 }
-  
 
 void target::updateVelocity(){
   
@@ -68,14 +67,13 @@ void target::draw(glm::mat4 viewMat, glm::mat4 projMat){
   tshader->Bind();
   glm::mat4 modelView = viewMat * getModelMat();
     
-    glm::mat4 model = getModelMat();
-    
-    glm::vec4 projVec = model * glm::vec4(mesh.vertices[0], mesh.vertices[1], mesh.vertices[2], 1.0);
-  
+  glm::mat4 model = getModelMat();
+
 #ifdef DEBUG_TESS
-    std::cout << "PROJ X: " << projVec.x << " Y: " << projVec.y << " Z: " << projVec.z << std::endl;
-    std::cout << "TOUCH X: " << collisionLocation.x << " Y: " << collisionLocation.y << " Z: " << collisionLocation.z << std::endl;
-    std::cout << "Distance: " << glm::distance(projVec, glm::vec4(collisionLocation, 1.0)) << std::endl;
+  glm::vec4 projVec = model * glm::vec4(mesh.vertices[0], mesh.vertices[1], mesh.vertices[2], 1.0);
+  std::cout << "PROJ X: " << projVec.x << " Y: " << projVec.y << " Z: " << projVec.z << std::endl;
+  std::cout << "TOUCH X: " << collisionLocation.x << " Y: " << collisionLocation.y << " Z: " << collisionLocation.z << std::endl;
+  std::cout << "Distance: " << glm::distance(projVec, glm::vec4(collisionLocation, 1.0)) << std::endl;
 #endif
   
   tshader->SetUniformMatrix4fv("Model", glm::value_ptr(model));
