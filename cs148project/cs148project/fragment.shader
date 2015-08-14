@@ -21,7 +21,4 @@ void main()
       FragColor.a = 1.0 - FragColor.g;
       FragColor.g = 0.0;
     }
-  
-
-
 }

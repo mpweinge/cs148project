@@ -17,7 +17,6 @@ in vec3 tessValue_GS[3];
 
 uniform float timeS;
 
-
 vec3 averageVectorValue(vec3 v0, vec3 v1, vec3 v2)
 {
   vec3 ret;
@@ -33,11 +32,8 @@ float rand(vec2 co){
 
 void main()
 {
-
-  
     //We receive 3 coordinates with tess coordinates tessValue_GS[0], 1, 2...
     //We want to treat this as a face and move them all in some way
-    
     float averageTouchDist = (touchDist_GS[0] + touchDist_GS[1] + touchDist_GS[2]) / 3.0;
     vec3 averageTess = averageVectorValue(tessValue_GS[0], tessValue_GS[1], tessValue_GS[2]);
     vec3 averageNormal = averageVectorValue(Normal_GS[0], Normal_GS[1], Normal_GS[2]);
@@ -66,8 +62,6 @@ void main()
     {
        offset = vec4(-averageTouchV * timeS * pow(averageTouchDist, 3) + averageTess.x + averageTess.y + averageTess.z, 1.0) / 10.0;
     }
-  
-
   
     gl_Position = gl_in[0].gl_Position + offset; EmitVertex();
 

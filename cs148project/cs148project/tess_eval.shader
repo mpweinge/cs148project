@@ -56,8 +56,7 @@ void main()
     gl_Position = Projection * Modelview * pos;
     vPosition_GS = pos.xyz;
     
-    //In here add the 'explosion' effect, aka move the points with an offset based off of
-    //proximity to the point of collision
+    //Pass along all of our vectors to our geometry shader
     texcoord_GS = interpolate2D(texcoord_ES[0], texcoord_ES[1], texcoord_ES[2]);
     Normal_GS = interpolate2D(Normal_ES[0], Normal_ES[1], Normal_ES[2]);
     touchDist_GS = distanceToTouch(Model * vec4(vPosition_GS, 1.0));
@@ -65,6 +64,4 @@ void main()
     touchVector_GS = interpolate2D(touchVector_ES[0], touchVector_ES[1], touchVector_ES[2]);
   
     tessValue_GS = gl_TessCoord;
-  
-
 }

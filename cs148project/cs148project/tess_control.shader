@@ -44,14 +44,13 @@ void main()
             gl_TessLevelOuter[0] = 1.0;
             gl_TessLevelOuter[1] = 1.0;
             gl_TessLevelOuter[2] = 1.0;
+        } else {
+            //Calculate tessellation based off of proximity to touch
+            gl_TessLevelInner[0] = 2.0 + int(touchDist);
+            gl_TessLevelOuter[0] = 1.0 + int(touchDist);
+            gl_TessLevelOuter[1] = 1.0 + int(touchDist);
+            gl_TessLevelOuter[2] = 1.0 + int(touchDist);
         }
-      
-          gl_TessLevelInner[0] = 2.0 + int(touchDist);
-          gl_TessLevelOuter[0] = 1.0 + int(touchDist);
-          gl_TessLevelOuter[1] = 1.0 + int(touchDist);
-          gl_TessLevelOuter[2] = 1.0 + int(touchDist);
-          
-       
     }
 }
 
