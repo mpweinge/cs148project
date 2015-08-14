@@ -16,10 +16,7 @@ target::target(SimpleShaderProgram *targShader, std::string objName, std::string
   
   // Set state to 0's
   init();
-
 }
-
-
 
 float target::getRadius() {
   return mesh.radius;
@@ -62,7 +59,6 @@ void target::updateVelocity(){
   // For wooden target
   collisionCorner1 = glm::vec4(0.0, 0.00, 0.05, 1.0);
   collisionCorner2 = glm::vec4(1.0, 0.5, 0.05, 1.0);
-  
 }
 
 void target::draw(glm::mat4 viewMat, glm::mat4 projMat){

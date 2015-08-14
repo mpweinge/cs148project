@@ -22,8 +22,6 @@
 #include "SimpleImage.h"
 #include "DataStructs.hpp"
 
-
-
 /* Usage Notes:
  - The array buffers for position, normals, and texture coordinates are expecting the shaders
    to use:
@@ -55,7 +53,6 @@ private:
   vector3 cross(vector3 a, vector3 b);
   GLuint vao;  
   GLuint textureIndex;
-  
 };
 
 #endif /* OBJMESH_CPP_ */

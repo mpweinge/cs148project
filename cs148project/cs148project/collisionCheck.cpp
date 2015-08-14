@@ -8,7 +8,6 @@
 
 #include "collisionCheck.hpp"
 
-
 bool checkCollision(projectile *p, target *t, glm::vec3 &intersectPoint){
   // Fast check
   if (!sphereCollision(p, t)){
@@ -49,8 +48,7 @@ bool lineFaceCollision(projectile *p, target *t, glm::vec3 &intersectPoint){
   
   // See if intersection points within bounds
   intersectPoint = intersectionDistance * projDir + projE1;
-  return glm::all(glm::lessThanEqual((faceC1 - intersectPoint) * (faceC2 - intersectPoint), glm::vec3(0.0)));  
-
+  return glm::all(glm::lessThanEqual((faceC1 - intersectPoint) * (faceC2 - intersectPoint), glm::vec3(0.0)));
 }
 
 

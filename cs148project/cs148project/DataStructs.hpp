@@ -28,6 +28,7 @@ struct vertex {
     return 0.0;
   };
 };
+
 struct texture {
 	bool defined;
 	float x, y, w;

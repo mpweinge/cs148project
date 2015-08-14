@@ -10,8 +10,6 @@
 #define __cs148project__target__
 
 #include <stdio.h>
-
-
 #include <stdio.h>
 #include <string>
 #include <vector>
@@ -19,8 +17,6 @@
 #include "SimpleShaderProgram.h"
 #include "movingObjectBase.hpp"
 #include "objMesh.hpp"
-
-
 
 class target : public movingObjectBase {
 public:

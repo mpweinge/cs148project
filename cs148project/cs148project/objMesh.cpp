@@ -69,7 +69,6 @@ void objMesh::init(std::string objFile, GLuint shaderProg, std::string texFile){
   
   // Un-bind the vao so that no one else writes over it
   glBindVertexArray(0);
-  
 }
 
 void objMesh::draw(){
@@ -251,5 +250,4 @@ bool objMesh::parseFile(std::string fname){
   radius = powf(radius, 0.5);
   
   return true;
-  
 }

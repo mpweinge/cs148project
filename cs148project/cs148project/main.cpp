@@ -105,9 +105,7 @@ void cursor_position_callback(GLFWwindow *win, double x, double y){
     glfwSetCursorPos(gWindow, mousePosClamp[0] + winCenter[0], mousePosClamp[1] + winCenter[1]);
   }
     orientation = pixelToDeg * mousePos;
-
-  
- }
+}
 
 inline float clamp(float x, float xmin, float xmax){
   x = x < xmin ? xmin : x;
@@ -170,7 +168,6 @@ void window_resize_callback(GLFWwindow *w, int x, int y){
 }
 
 /******************* Display Update *******************/
-
 void launchProjectile(){
   projectile *p = new projectile(pshader, projectileObjFile, projectileTexFile);
   // Position
@@ -217,7 +214,6 @@ void updateUniformMatrices(){
 void setGreenAsAlpha(SimpleShaderProgram *s, bool status){
   s->SetUniform("treatGreenAsTransparent", status ? 1 : 0);
 }
-
 
 void display(){
   
@@ -284,7 +280,6 @@ void display(){
     tit++;
   }
   
-  
   // Need to draw reticule last since it has transparency. Also,
   // we want view to be identity for it:
   glm::mat4 bufferView = view;
@@ -300,10 +295,9 @@ void display(){
   
   // Restore view for when launch is called.
   view = bufferView;
-  }
+}
 
 /**************** Initialization Functions *************/
-
 void createTargets(){
   // Target
   tshader = new SimpleShaderProgram();
@@ -341,8 +335,6 @@ void createTargets(){
   t = new target(tshader, targetObjFile, targetReportTexFile);
   t->loadTraj(traj, 0.2);
   targets.push_back(t);
-
-  
 }
 
 void glSetup() {
@@ -358,14 +350,12 @@ void glSetup() {
   skyBox.init(skyObjFile, envShader->programid, skyTexFile);
   reticule.init(reticuleObjFile, envShader->programid, reticuleTexFile);
   
-  
   // Projectile
   pshader = new SimpleShaderProgram();
   pshader->LoadVertexShader(vertexShaderPath);
   pshader->LoadFragmentShader(fragmentShaderPath);
   
   createTargets();
-
 
   // Initial view
   setProjection();
@@ -382,7 +372,6 @@ void glSetup() {
 
   
   glEnableClientState(GL_VERTEX_ARRAY);
-
 }
 
 void glfwSetup(){
@@ -417,7 +406,6 @@ void glfwSetup(){
   glfwSetKeyCallback(gWindow, key_callback);
   glfwSetFramebufferSizeCallback(gWindow, window_resize_callback);
   glfwSetScrollCallback(gWindow, scrollCallback);
-  
 }
 
 int main(int argc,  char * argv[]) {
